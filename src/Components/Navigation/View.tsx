@@ -12,19 +12,19 @@ import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 interface INavigationProps extends WithStyles<typeof styles> {}
 
 export const Navigation: React.SFC<INavigationProps> = ({ classes: { grow, link, activeLink } }) => {
-    return (
-      <CssBaseline>
-        <AppBar position="static">
-          <Toolbar variant="dense">
-            <Typography variant="h6" color="inherit" className={grow}>
-              SkillCasts
-            </Typography>
-            <NavLink to="/" exact activeClassName={activeLink} className={link}><Button color="inherit">Home</Button></NavLink>
-            <NavLink to="/podcasts" activeClassName={activeLink} className={link}><Button color="inherit">Podcasts</Button></NavLink>
-          </Toolbar>
-        </AppBar>
-      </CssBaseline>
-    )
+  return (
+    <CssBaseline>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Typography variant="h6" color="inherit" className={grow}>
+            SkillCasts
+          </Typography>
+          <NavLink to="/" exact activeClassName={activeLink} className={link}><Button color="inherit">Home</Button></NavLink>
+          <NavLink to="/podcasts" activeClassName={activeLink} className={link}><Button color="inherit">Podcasts</Button></NavLink>
+        </Toolbar>
+      </AppBar>
+    </CssBaseline>
+  )
 }
 
 const styles = createStyles({
