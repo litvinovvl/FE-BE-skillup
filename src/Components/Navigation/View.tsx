@@ -1,27 +1,16 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
-import { NavLink } from 'react-router-dom';
-import { createStyles, withStyles } from '@material-ui/core/styles';
 
-const styles = createStyles({
-  grow: {
-    flexGrow: 1,
-  },
-  link: {
-    color: "white",
-    textDecoration: "none"
-  },
-  activeLink: {
-    color: "#AED6F1",
-    textDecoration: "none"
-  }
-});
+interface NavigationProps extends WithStyles<typeof styles> {}
 
-const Navigation = ({ classes: { grow, link, activeLink } }: any) => {
+export const Navigation: React.SFC<NavigationProps> = ({ classes: { grow, link, activeLink } }) => {
     return (
       <CssBaseline>
         <AppBar position="static">
@@ -36,6 +25,21 @@ const Navigation = ({ classes: { grow, link, activeLink } }: any) => {
       </CssBaseline>
     )
 }
+
+const styles = createStyles({
+  grow: {
+    flexGrow: 1,
+    color: "#AED6F1",
+  },
+  link: {
+    color: "white",
+    textDecoration: "none"
+  },
+  activeLink: {
+    color: "#AED6F1",
+    textDecoration: "none"
+  }
+});
 
 export default withStyles(styles)(Navigation);
 
