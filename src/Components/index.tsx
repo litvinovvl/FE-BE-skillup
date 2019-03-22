@@ -6,7 +6,7 @@ import { Navigation } from './Navigation';
 import { Podcasts } from './Podcasts';
 
 class Main extends Component {
-  render() {
+  public render() {
     return (
       <BrowserRouter>
         <Navigation />

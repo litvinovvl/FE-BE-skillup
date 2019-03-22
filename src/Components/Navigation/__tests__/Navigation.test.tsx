@@ -1,6 +1,6 @@
+import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { ReactWrapper, mount } from 'enzyme';
 
 import Navigation from '../View';
 
