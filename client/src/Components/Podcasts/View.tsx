@@ -1,8 +1,9 @@
 import React from 'react';
+import { List } from '../List';
 
 const Podcasts = () => {
   return (
-    <div>Podcasts component</div>
+    <List />
   )
 }
 

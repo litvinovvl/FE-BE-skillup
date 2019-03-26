@@ -35,7 +35,7 @@ const Home: React.SFC<IHomeProps> = ({ classes: { container, heading } }) => {
 
 const styles = createStyles({
   container: {
-    width: "66%",
+    width: "50%",
     marginTop: "20px",
     margin: "auto",
     padding: "30px"
