@@ -38,5 +38,9 @@ export const schema: any = {
     label: "Thumbnail",
     type: "file",
     accept: "image/*"
+  },
+  date: {
+    label: "Release date",
+    type: "date"
   }
 }

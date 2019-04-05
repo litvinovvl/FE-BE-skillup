@@ -1,13 +1,11 @@
 import React from 'react';
+import moment from 'moment';
 
-import moment from '@date-io/moment';
-import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
-import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
-
-import { TextField } from '../FormFields';
+import { FormField } from '../FormField';
 import { schema } from './formSchema';
 
 interface IAddFormProps extends WithStyles<typeof styles> {}
@@ -21,7 +19,7 @@ const init: any = {
   bpm: '',
   duration: '',
   thumbnail: '',
-  date: '',
+  date: moment(),
 }
 
 const AddForm: React.SFC<IAddFormProps> = ({ classes: { container, form, submitButton } }) => {
@@ -29,32 +27,17 @@ const AddForm: React.SFC<IAddFormProps> = ({ classes: { container, form, submitB
     console.log({ values, actions });
   }
 
-  const renderForm = ({ setFieldValue }: any) => (
+  const renderForm = () => (
     <Form className={form}>
       {Object.keys(schema).map((key, index) => (
         <Field
           key={index}
           name={key}
-          component={TextField}
+          component={FormField}
           {...schema[key]}
         />
       ))}
-      
-      <Field
-        name="date"
-        render={() => (
-          <MuiPickersUtilsProvider utils={moment}>
-            <DatePicker
-              margin="normal"
-              label="Released"
-              value={"01/01/2001"}
-              // tslint:disable-next-line
-              onChange={(data) => console.log(data)}
-              fullWidth
-            />
-          </MuiPickersUtilsProvider>
-        )}
-      />
+
       <Button variant="contained" color="primary" type="submit" className={submitButton}>
         Add podcast
       </Button>
