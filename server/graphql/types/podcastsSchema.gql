@@ -1,0 +1,28 @@
+scalar DateTime
+scalar ObjectID
+
+type Podcast {
+  _id: ObjectID!
+  author: String!
+  title: String!
+  description: String
+  label: String
+  genre: String
+  bpm: Int
+  duration: Int
+  thumbnail: String
+  released: DateTime
+}
+
+type Query {
+  getPodcasts: Podcast!
+}
+
+input PodcastInput {
+  author: String!
+  title: String!
+}
+
+type Mutation {
+  addPodcast (input: PodcastInput!): Podcast!
+}
