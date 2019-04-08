@@ -15,7 +15,7 @@ type Podcast {
 }
 
 type Query {
-  getPodcasts: Podcast!
+  getPodcasts: [Podcast!]
 }
 
 input PodcastInput {

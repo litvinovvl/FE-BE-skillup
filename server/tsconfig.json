@@ -4,10 +4,11 @@
     "sourceMap": true,
     "target": "es2017",
     "outDir": "./dist",
-    "baseUrl": "./src"
+    "baseUrl": "./",
+    "types": ["node"]
   },
   "include": [
-    "src/**/*.ts"
+    "./**/*.ts"
   ],
   "exclude": [
     "node_modules"
