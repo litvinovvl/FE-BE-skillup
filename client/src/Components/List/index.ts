@@ -1,1 +1,22 @@
-export {default as List} from './View';
+import gql from 'graphql-tag';
+import { compose, graphql } from 'react-apollo';
+import List from './View';
+
+export const GET_PODCASTS = gql`
+  query {
+    getPodcasts {
+      title
+    }
+  }
+`;
+
+const getPodcasts = graphql(GET_PODCASTS, {
+  props: ({ data }: any) => {
+    if (data.loading || data.error) return { podcasts: [] };
+    return {
+      podcasts: data.getPodcasts
+    }
+  },
+});
+
+export default compose(getPodcasts)(List);

@@ -3,7 +3,7 @@ const GraphQLObjectId = require('graphql-scalar-objectid');
 // const Todo = require('../../models/todo');
 
 const getPodcasts = async (filter) => {
-  return { title: "test" }
+  return [{ title: "test" }]
 };
 
 // const getItemById = async ({ id }) => await Todo.findById(id);

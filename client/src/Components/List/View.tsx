@@ -2,6 +2,7 @@ import React from 'react';
 
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -23,14 +24,25 @@ const styles = createStyles({
     margin: "auto",
     padding: "30px",
   },
+  top: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
 });
 
-interface IAddFormProps extends WithStyles<typeof styles> {}
+interface IAddFormProps extends WithStyles<typeof styles> {
+  podcasts: any
+}
 
-const PList: React.SFC<IAddFormProps> = ({ classes }) => {
+const PodcastsList: React.SFC<IAddFormProps> = ({ classes, podcasts }) => {
+  console.log(podcasts)
   return (
     <Paper className={classes.container}>
-      <h2>Add new podcast</h2>
+      <div className={classes.top}>
+        <h2>Podcasts</h2>
+        <Button color="primary" size="large">Add new podcast</Button>
+      </div>
       <List className={classes.list}>
       {[0, 1, 2, 3].map(value => (
         <ListItem key={value} button>
@@ -42,16 +54,15 @@ const PList: React.SFC<IAddFormProps> = ({ classes }) => {
           </ListItemAvatar>
           <ListItemText primary={`Line item ${value + 1}`} />
           <ListItemSecondaryAction>
-            <IconButton aria-label="Delete">
+            <IconButton aria-label="Delete" color="secondary">
               <DeleteIcon />
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
       ))}
-    </List>
+      </List>
     </Paper>
-    
   );
 }
 
-export default withStyles(styles)(PList);
+export default withStyles(styles)(PodcastsList);
