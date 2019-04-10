@@ -1,5 +1,14 @@
 scalar DateTime
 scalar ObjectID
+scalar Upload
+
+type File {
+  id: ID!
+  path: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
 
 type Podcast {
   _id: ObjectID!
@@ -21,6 +30,13 @@ type Query {
 input PodcastInput {
   author: String!
   title: String!
+  description: String
+  label: String
+  genre: String
+  BPM: Int,
+  duration: Int,
+  thumbnail: Upload,
+  released: DateTime
 }
 
 type Mutation {
