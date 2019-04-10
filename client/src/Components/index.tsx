@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-d
 
 import moment from '@date-io/moment';
 import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider';
-import { AddForm } from './AddForm';
+import AddForm from './AddForm';
 import { Home } from "./Home";
 import { Navigation } from './Navigation';
 import { Podcasts } from './Podcasts';

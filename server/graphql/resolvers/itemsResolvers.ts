@@ -1,5 +1,6 @@
 const { GraphQLDate } = require('graphql-iso-date');
 const GraphQLObjectId = require('graphql-scalar-objectid');
+const { GraphQLUpload } = require('graphql-upload');
 // const Todo = require('../../models/todo');
 
 const getPodcasts = async (filter) => {
@@ -9,7 +10,8 @@ const getPodcasts = async (filter) => {
 // const getItemById = async ({ id }) => await Todo.findById(id);
 
 const addPodcast = async ({ input }) => {
-  console.log(input)
+  console.log(input.thumbnail)
+  return { title: "test" }
 };
 
 // const updateItem = async ({ id, title, completed }) => await Todo.findByIdAndUpdate(id, { $set: { title, completed } }, { new: true });
@@ -27,5 +29,6 @@ module.exports = {
   // updateItem,
   // deleteItem,
   DateTime: GraphQLDate,
-  ObjectID: GraphQLObjectId
+  ObjectID: GraphQLObjectId,
+  Upload: GraphQLUpload
 };

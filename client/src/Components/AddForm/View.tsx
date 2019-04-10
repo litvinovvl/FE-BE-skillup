@@ -8,7 +8,9 @@ import { Field, Form, Formik } from 'formik';
 import { FormField } from '../FormField';
 import { schema } from './formSchema';
 
-interface IAddFormProps extends WithStyles<typeof styles> {}
+interface IAddFormProps extends WithStyles<typeof styles> {
+  addPodcast: (input: any) => void
+}
 
 const init: any = {
   author: '',
@@ -16,15 +18,20 @@ const init: any = {
   description: '',
   label: '',
   genre: '',
-  bpm: '',
-  duration: '',
+  // bpm: '',
+  // duration: '',
   thumbnail: '',
-  date: moment(),
+  // date: moment(),
 }
 
-const AddForm: React.SFC<IAddFormProps> = ({ classes: { container, form, submitButton } }) => {
-  const onSubmit = (values: any, actions: any) => {
-    console.log({ values, actions });
+const AddForm: React.SFC<IAddFormProps> = ({ classes: { container, form, submitButton }, addPodcast }) => {
+  const onSubmit = (values: any) => {
+    console.log(values)
+    addPodcast({
+      variables: {
+        input: values
+      }
+    })
   }
 
   const renderForm = () => (

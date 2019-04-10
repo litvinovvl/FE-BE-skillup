@@ -11,6 +11,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
 
 const styles = createStyles({
   list: {
@@ -28,6 +29,9 @@ const styles = createStyles({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+  link: {
+    textDecoration: "none"
   }
 });
 
@@ -41,7 +45,9 @@ const PodcastsList: React.SFC<IAddFormProps> = ({ classes, podcasts }) => {
     <Paper className={classes.container}>
       <div className={classes.top}>
         <h2>Podcasts</h2>
-        <Button color="primary" size="large">Add new podcast</Button>
+        <Link to="/podcasts/new" className={classes.link}>
+          <Button color="primary" size="large">Add new podcast</Button>
+        </Link>
       </div>
       <List className={classes.list}>
       {[0, 1, 2, 3].map(value => (
