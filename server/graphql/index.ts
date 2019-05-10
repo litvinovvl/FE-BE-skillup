@@ -1,12 +1,12 @@
-const express = require('express');
+const { Router } = require('express');
 const graphqlHTTP = require('express-graphql');
-const schema = require('./types/index.ts');
-const rootResolvers = require('./resolvers/itemsResolvers.ts');
+const rootSchema = require('./types/index.ts');
+const rootResolvers = require('./resolvers/index.ts');
 
-const router = express.Router();
+const router = Router();
 
 router.all('/', graphqlHTTP({
-  schema,
+  schema: rootSchema,
   rootValue: rootResolvers,
   graphiql: true
 }));

@@ -6,7 +6,11 @@ const connection = async () => await createConnection({
     port: 5432,
     username: "litvinov",
     password: "kZbYJ77G",
-    database: "mydb"
+    database: "podcastsdb",
+    entities: [
+      "db/entity/*.ts"
+    ],
+    logging: true
 });
 
 module.exports = connection;

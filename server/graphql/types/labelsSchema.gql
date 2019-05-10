@@ -1,0 +1,9 @@
+type Label {
+  id: Int!
+  name: String!
+  authors: [Author]
+}
+
+type Query {
+  getLabels: [Label!]
+}

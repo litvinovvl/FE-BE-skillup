@@ -3,7 +3,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 const cors = require('cors');
 var logger = require('morgan');
-const  { graphqlUploadExpress } = require('graphql-upload');
+const { graphqlUploadExpress } = require('graphql-upload');
 
 const graphql = require('./graphql/index.ts');
 var app = express();

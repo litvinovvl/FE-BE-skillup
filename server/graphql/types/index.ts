@@ -1,6 +1,6 @@
-const fs = require('fs');
+import { fileLoader, mergeTypes } from 'merge-graphql-schemas'
 const { buildSchema } = require('graphql');
 
-const schema = fs.readFileSync(`${__dirname}/podcastsSchema.gql`, 'utf-8');
+const typeDefs = mergeTypes(fileLoader(`${__dirname}/*.gql`), { all: true })
 
-module.exports = buildSchema(schema);
+module.exports = buildSchema(typeDefs);

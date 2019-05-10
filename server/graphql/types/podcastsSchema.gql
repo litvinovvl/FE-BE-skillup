@@ -1,5 +1,4 @@
 scalar DateTime
-scalar ObjectID
 scalar Upload
 
 type File {
@@ -11,7 +10,7 @@ type File {
 }
 
 type Podcast {
-  _id: ObjectID!
+  id: Int!
   author: String!
   title: String!
   description: String
