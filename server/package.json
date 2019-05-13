@@ -3,7 +3,8 @@
    "version": "0.0.0",
    "private": true,
    "scripts": {
-      "start": "ts-node bin/www"
+      "start": "ts-node bin/www",
+      "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
    },
    "dependencies": {
       "@types/node": "^11.13.0",
@@ -26,6 +27,7 @@
       "mysql": "^2.14.1",
       "pg": "^7.9.0",
       "reflect-metadata": "^0.1.10",
+      "tsconfig-paths": "^3.8.0",
       "typeorm": "0.2.16"
    },
    "devDependencies": {

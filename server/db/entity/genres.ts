@@ -1,6 +1,7 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
+import { podcasts } from "./podcasts";
 
-@Entity('genres', { schema: 'public'} )
+@Entity('genres',{schema:'public' } )
 export class genres {
 
   @Column('integer', {
@@ -8,8 +9,7 @@ export class genres {
     primary: true,
     name: 'id'
   })
-  id:number;
-
+  id: number;
 
   @Column('character varying', {
     nullable: false,
@@ -17,5 +17,8 @@ export class genres {
     name: 'name'
   })
   name: string;
+
+  @OneToMany(type => podcasts, podcasts => podcasts.genre)
+  podcasts: podcasts[];
 
 }

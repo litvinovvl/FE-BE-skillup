@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { labels } from "./labels";
+import { podcasts } from "./podcasts";
 
 @Entity('authors', { schema: 'public' })
 export class authors {
@@ -10,7 +11,7 @@ export class authors {
   })
   id: number;
 
-  @Column('character varying', { 
+  @Column('character varying', {
     nullable: false,
     length: 255,
     name: 'name'
@@ -18,7 +19,10 @@ export class authors {
   name: string;
 
   @ManyToOne(type => labels, labels => labels.authors, {})
-  @JoinColumn({ name: 'labelId'})
+  @JoinColumn({ name: 'labelId' })
   label: labels | null;
+
+  @OneToMany(type => podcasts, podcasts => podcasts.author)
+  podcasts: podcasts[];
 
 }

@@ -1,11 +1,12 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { authors } from "./authors";
+import { genres } from "./genres";
 
-@Entity('podcasts', { schema: 'public' })
+@Entity('podcasts', { schema:'public'} )
 export class podcasts {
 
-  @Column('integer', {
-    nullable: false,
-    primary: true,
+  @PrimaryGeneratedColumn({
+    type: 'integer',
     name: 'id'
   })
   id: number;
@@ -17,11 +18,9 @@ export class podcasts {
   })
   title: string;
 
-  @Column('integer', {
-    nullable: false,
-    name: 'authorId'
-  })
-  authorId: number;
+  @ManyToOne(type => authors, authors => authors.podcasts, { nullable: false })
+  @JoinColumn({ name: 'authorId' })
+  author: authors | null;
 
   @Column('text', {
     nullable: false,
@@ -29,11 +28,9 @@ export class podcasts {
   })
   description: string;
 
-  @Column('integer', {
-    nullable: false,
-    name: 'genreId'
-  })
-  genreId: number;
+  @ManyToOne(type => genres, genres => genres.podcasts, { nullable: false })
+  @JoinColumn({ name:'genreId' })
+  genre: genres | null;
 
   @Column('integer', {
     nullable: false,
@@ -48,10 +45,10 @@ export class podcasts {
   duration: any;
 
   @Column('text', {
-    nullable: false,
+    nullable: true,
     name: 'thumbnail'
   })
-  thumbnail: string;
+  thumbnail: string | null;
 
   @Column('date', {
     nullable: false,
