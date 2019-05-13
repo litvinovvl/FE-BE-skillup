@@ -2,11 +2,15 @@ import React from 'react';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
-const currencies = [1, 2, 3];
-
-export const schema: any = {
+export const formSchema = (genres: any[], authors: any[], labels: any[]) => ({
   author: {
-    label: "Author"
+    label: "Author",
+    select: true,
+    children: authors.map(({ name }: any) => (
+      <MenuItem key={name} value={name}>
+        {name}
+      </MenuItem>
+    ))
   },
   title: {
     label: "Title"
@@ -17,14 +21,20 @@ export const schema: any = {
     multiline: true
   },
   label: {
-    label: "Label"
+    label: "Label",
+    select: true,
+    children: labels.map(({ name }: any) => (
+      <MenuItem key={name} value={name}>
+        {name}
+      </MenuItem>
+    ))
   },
   genre: {
     label: "Genre",
     select: true,
-    children: currencies.map(option => (
-      <MenuItem key={option} value={option}>
-        {option}
+    children: genres.map(({ name }: any) => (
+      <MenuItem key={name} value={name}>
+        {name}
       </MenuItem>
     ))
   },
@@ -43,4 +53,4 @@ export const schema: any = {
     label: "Release date",
     type: "date"
   }
-}
+})

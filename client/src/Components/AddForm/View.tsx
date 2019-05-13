@@ -6,10 +6,13 @@ import Paper from '@material-ui/core/Paper';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
 import { FormField } from '../FormField';
-import { schema } from './formSchema';
+import { formSchema } from './formSchema';
 
 interface IAddFormProps extends WithStyles<typeof styles> {
-  addPodcast: (input: any) => void
+  addPodcast: (input: any) => void,
+  genres: any[],
+  authors: any[],
+  labels: any[]
 }
 
 const init: any = {
@@ -24,7 +27,13 @@ const init: any = {
   // date: moment(),
 }
 
-const AddForm: React.SFC<IAddFormProps> = ({ classes: { container, form, submitButton }, addPodcast }) => {
+const AddForm: React.SFC<IAddFormProps> = ({
+  classes: { container, form, submitButton },
+  addPodcast,
+  genres,
+  authors,
+  labels
+}) => {
   const onSubmit = (values: any) => {
     console.log(values)
     addPodcast({
@@ -33,6 +42,8 @@ const AddForm: React.SFC<IAddFormProps> = ({ classes: { container, form, submitB
       }
     })
   }
+
+  const schema: any = formSchema(genres, authors, labels);
 
   const renderForm = () => (
     <Form className={form}>
