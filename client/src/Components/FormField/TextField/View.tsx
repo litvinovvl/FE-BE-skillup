@@ -4,12 +4,18 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 export default ({
-  field: { value = "", ...field},
-  form: { touched, errors },
+  field: { value, ...field},
+  form: { touched, errors, setFieldValue },
   displayedValue,
+  refetch,
   ...props
 }: any) => {
   const toShowError = touched[field.name];
+
+  const handleChange = (event: any) => {
+    setFieldValue(field.name, event.target.value);
+    refetch(field.name, event.target.value);
+  }
   
   return (
     <TextField
@@ -20,6 +26,7 @@ export default ({
       fullWidth
       {...field}
       {...props}
+      onChange={handleChange}
     />
   )
 };

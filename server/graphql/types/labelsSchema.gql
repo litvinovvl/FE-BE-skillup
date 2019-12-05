@@ -5,5 +5,5 @@ type Label {
 }
 
 type Query {
-  getLabels: [Label!]
+  getLabels (labelId: Int): [Label!]
 }

@@ -19,7 +19,7 @@ type Podcast {
   bpm: Int
   duration: Int
   thumbnail: String
-  released: DateTime
+  date: DateTime
 }
 
 type Query {
@@ -27,15 +27,15 @@ type Query {
 }
 
 input PodcastInput {
-  author: String!
+  author: Int!
   title: String!
   description: String
-  label: String
-  genre: String
-  BPM: Int,
+  label: Int
+  genre: Int
+  bpm: Int,
   duration: Int,
   thumbnail: Upload,
-  released: DateTime
+  date: DateTime
 }
 
 type Mutation {

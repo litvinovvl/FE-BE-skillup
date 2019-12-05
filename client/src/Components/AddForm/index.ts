@@ -20,6 +20,7 @@ const addPodcast = graphql(ADD_PODCAST, {
 export const GET_GENRES = gql`
   query {
     getGenres {
+      id
       name
     }
   }
@@ -35,25 +36,36 @@ const getGenres = graphql(GET_GENRES, {
 });
 
 export const GET_AUTHORS = gql`
-  query {
-    getAuthors {
+  query getAuthors ($labelId: Int) {
+    getAuthors (labelId: $labelId ) {
+      id
       name
+      label {
+        id
+      }
     }
   }
 `;
 
 const getAuthors = graphql(GET_AUTHORS, {
   props: ({ data }: any) => {
-    if (data.loading || data.error) return { authors: [] };
+    if (data.loading || data.error) {
+      return {
+        authors: [],
+        refetchAuthors: data.refetch
+      }
+    };
     return {
-      authors: data.getAuthors
+      authors: data.getAuthors,
+      refetchAuthors: data.refetch
     }
   },
 });
 
 export const GET_LABELS = gql`
-  query {
-    getLabels {
+  query getLabels ($labelId: Int) {
+    getLabels (labelId: $labelId ) {
+      id
       name
     }
   }
@@ -61,9 +73,15 @@ export const GET_LABELS = gql`
 
 const getLabels = graphql(GET_LABELS, {
   props: ({ data }: any) => {
-    if (data.loading || data.error) return { labels: [] };
+    if (data.loading || data.error) {
+      return {
+        labels: [],
+        refetchLabels: data.refetch
+      };
+    }
     return {
-      labels: data.getLabels
+      labels: data.getLabels,
+      refetchLabels: data.refetch
     }
   },
 });
