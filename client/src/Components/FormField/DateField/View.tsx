@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DatePicker from 'material-ui-pickers/DatePicker';
+import { DatePicker } from '@material-ui/pickers';
 
 export default ({ field, form, ...other }: any) => {
 

@@ -6,5 +6,5 @@ type Author {
 }
 
 type Query {
-  getAuthors: [Author!]
+  getAuthors (labelId: Int): [Author!]
 }

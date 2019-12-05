@@ -5,7 +5,21 @@ import List from './View';
 export const GET_PODCASTS = gql`
   query {
     getPodcasts {
+      author {
+        id
+        name
+      }
       title
+      description
+      label
+      genre {
+        id
+        name
+      }
+      bpm
+      duration
+      thumbnail
+      date
     }
   }
 `;

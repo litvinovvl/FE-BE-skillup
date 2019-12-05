@@ -2,47 +2,56 @@ import React from 'react';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
-export const formSchema = (genres: any[], authors: any[], labels: any[]) => ({
+export const formSchema = (genres: any[], authors: any[], labels: any[], refetch: (fieldName: any, id: any) => void) => ({
   author: {
     label: "Author",
     select: true,
-    children: authors.map(({ name }: any) => (
-      <MenuItem key={name} value={name}>
-        {name}
+    refetch,
+    children: authors.map((author: any) => (
+      <MenuItem key={author.name} value={author}>
+        {author.name}
       </MenuItem>
     ))
   },
   title: {
-    label: "Title"
+    label: "Title",
+    refetch
   },
   description: {
     label: "Description",
     rows: 5,
-    multiline: true
+    multiline: true,
+    refetch
   },
   label: {
     label: "Label",
     select: true,
-    children: labels.map(({ name }: any) => (
-      <MenuItem key={name} value={name}>
-        {name}
+    children: labels.map((label: any) => (
+      <MenuItem key={label.name} value={label}>
+        {label.name}
       </MenuItem>
-    ))
+    )),
+    refetch
   },
   genre: {
     label: "Genre",
     select: true,
-    children: genres.map(({ name }: any) => (
-      <MenuItem key={name} value={name}>
-        {name}
+    children: genres.map((genre: any) => (
+      <MenuItem key={genre.name} value={genre}>
+        {genre.name}
       </MenuItem>
-    ))
+    )),
+    refetch
   },
   bpm: {
-    label: "BPM"
+    label: "BPM",
+    type: "number",
+    refetch
   },
   duration: {
-    label: "Duration"
+    label: "Duration",
+    type: "number",
+    refetch
   },
   thumbnail: {
     label: "Thumbnail",

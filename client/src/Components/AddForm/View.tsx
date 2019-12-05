@@ -10,6 +10,8 @@ import { formSchema } from './formSchema';
 
 interface IAddFormProps extends WithStyles<typeof styles> {
   addPodcast: (input: any) => void,
+  refetchLabels: (labelId: any) => void,
+  refetchAuthors: (labelId: any) => void,
   genres: any[],
   authors: any[],
   labels: any[]
@@ -21,10 +23,10 @@ const init: any = {
   description: '',
   label: '',
   genre: '',
-  // bpm: '',
-  // duration: '',
+  bpm: '',
+  duration: '',
   thumbnail: '',
-  // date: moment(),
+  date: moment(),
 }
 
 const AddForm: React.SFC<IAddFormProps> = ({
@@ -32,18 +34,31 @@ const AddForm: React.SFC<IAddFormProps> = ({
   addPodcast,
   genres,
   authors,
-  labels
+  labels,
+  refetchLabels,
 }) => {
   const onSubmit = (values: any) => {
-    console.log(values)
     addPodcast({
       variables: {
-        input: values
+        input: {
+          ...values,
+          bpm: Number(values.bpm),
+          duration: Number(values.duration),
+          label: values.label.id,
+          author: values.author.id,
+          genre: values.genre.id
+        }
       }
     })
   }
 
-  const schema: any = formSchema(genres, authors, labels);
+  const refetch = (fieldName: any, value: any) => {
+    if (fieldName === 'author') {
+      refetchLabels({ labelId: value.label.id });
+    }
+  }
+
+  const schema: any = formSchema(genres, authors, labels, refetch);
 
   const renderForm = () => (
     <Form className={form}>
