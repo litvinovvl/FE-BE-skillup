@@ -4,8 +4,6 @@ const { podcasts } = require('../../db/entity/podcasts');
 
 const cloudinary = require('cloudinary').v2;
 
-cloudinary.config('cloudinary://899685619679277:qfEsJzWHCycuDLrmjoHy158JDBU@spawn1');
-
 const getPodcasts = async () => {
   const repo = getConnection().getRepository(podcasts);
 
@@ -16,7 +14,7 @@ const addPodcast = async (podcast) => {
   const { createReadStream } = await podcast.input.thumbnail;
 
   let resultSecureUrl = '';
-  const cloudinaryUpload = async ({stream}) => {
+  const cloudinaryUpload = async ({ stream }) => {
     try {
       await new Promise((resolve, reject) => {
         const streamLoad = cloudinary.uploader.upload_stream(function (error, result) {
@@ -31,7 +29,7 @@ const addPodcast = async (podcast) => {
       });
     }
     catch (err) {
-      throw new Error(`Failed to upload thumbnail! Err:${err.message}`);
+      throw new Error(`Failed to upload thumbnail! Err:${err}`);
     }
   };
 
@@ -48,7 +46,16 @@ const addPodcast = async (podcast) => {
    return await repo.save(podcastToSave);
 }
 
+const removePodcast = async ({ input: { id } }) => {
+  const repo = getConnection().getRepository(podcasts);
+
+  await repo.delete(id);
+
+  return { id };
+}
+
 module.exports = {
   addPodcast,
-  getPodcasts
+  getPodcasts,
+  removePodcast
 };

@@ -1,4 +1,5 @@
 scalar DateTime
+scalar Interval
 scalar Upload
 
 type File {
@@ -17,7 +18,7 @@ type Podcast {
   label: String
   genre: Genre
   bpm: Int
-  duration: Int
+  duration: Interval
   thumbnail: String
   date: DateTime
 }
@@ -32,12 +33,24 @@ input PodcastInput {
   description: String
   label: Int
   genre: Int
-  bpm: Int,
-  duration: Int,
-  thumbnail: Upload,
+  bpm: Int
+  duration: Int
+  thumbnail: Upload
   date: DateTime
 }
 
 type Mutation {
   addPodcast (input: PodcastInput!): Podcast!
+}
+
+input RemovePodcastInput {
+  id: Int!
+}
+
+type RemovePodcastOutput {
+  id: Int!
+}
+
+type Mutation {
+  removePodcast (input: RemovePodcastInput!): RemovePodcastOutput
 }

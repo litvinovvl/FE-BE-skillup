@@ -5,6 +5,7 @@ import List from './View';
 export const GET_PODCASTS = gql`
   query {
     getPodcasts {
+      id
       author {
         id
         name
