@@ -25,11 +25,15 @@ export const GET_PODCASTS = gql`
   }
 `;
 
-const getPodcasts = graphql(GET_PODCASTS, {
+export const getPodcasts = graphql(GET_PODCASTS, {
+  options: () => ({
+    fetchPolicy: 'network-only'
+  }),
   props: ({ data }: any) => {
-    if (data.loading || data.error) return { podcasts: [] };
+    if (data.loading) return { loading: data.loading, podcasts: [] };
     return {
-      podcasts: data.getPodcasts
+      podcasts: data.getPodcasts,
+      loading: false
     }
   },
 });

@@ -15,7 +15,7 @@ const removePodcast = graphql(REMOVE_PODCAST, {
   name: 'removePodcast',
   options: {
     refetchQueries: () => [{ query: GET_PODCASTS }],
-    onCompleted: ({ removePodcast: { id } }: any) => console.log(id),
+    onCompleted: ({ removePodcast: { id } }: any) => ({ id }),
   },
 });
 
