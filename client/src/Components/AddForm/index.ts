@@ -14,7 +14,7 @@ const ADD_PODCAST = gql`
 const addPodcast = graphql(ADD_PODCAST, {
   name: 'addPodcast',
   options: () => ({
-    onCompleted: ({ addPodcast: { title } }: any) => console.log(title),
+    onCompleted: ({ addPodcast }: any) => ({ ...addPodcast }),
     refetchQueries: () => [{ query: GET_PODCASTS }],
   })
 });
@@ -30,8 +30,9 @@ export const GET_GENRES = gql`
 
 const getGenres = graphql(GET_GENRES, {
   props: ({ data }: any) => {
-    if (data.loading || data.error) return { genres: [] };
+    if (data.loading || data.error) return { genres: [], genresLoading: data.loading, };
     return {
+      genresLoading: data.loading,
       genres: data.getGenres
     }
   },
@@ -53,11 +54,13 @@ const getAuthors = graphql(GET_AUTHORS, {
   props: ({ data }: any) => {
     if (data.loading || data.error) {
       return {
+        authorsLoading: data.loading,
         authors: [],
         refetchAuthors: data.refetch
       }
     };
     return {
+      authorsLoading: data.loading,
       authors: data.getAuthors,
       refetchAuthors: data.refetch
     }
@@ -77,11 +80,13 @@ const getLabels = graphql(GET_LABELS, {
   props: ({ data }: any) => {
     if (data.loading || data.error) {
       return {
+        labelsLoading: data.loading,
         labels: [],
         refetchLabels: data.refetch
       };
     }
     return {
+      labelsLoading: data.loading,
       labels: data.getLabels,
       refetchLabels: data.refetch
     }
