@@ -30,7 +30,8 @@ export const GET_GENRES = gql`
 
 const getGenres = graphql(GET_GENRES, {
   props: ({ data }: any) => {
-    if (data.loading || data.error) return { genres: [], genresLoading: data.loading, };
+    if (data.loading) return { genres: [], genresLoading: data.loading, };
+    if (data.error) return { genres: [], error: data.error };
     return {
       genresLoading: data.loading,
       genres: data.getGenres
@@ -52,11 +53,18 @@ export const GET_AUTHORS = gql`
 
 const getAuthors = graphql(GET_AUTHORS, {
   props: ({ data }: any) => {
-    if (data.loading || data.error) {
+    if (data.loading) {
       return {
         authorsLoading: data.loading,
         authors: [],
         refetchAuthors: data.refetch
+      }
+    };
+    if (data.error) {
+      return {
+        authors: [],
+        refetchAuthors: data.refetch,
+        error: data.error
       }
     };
     return {
@@ -78,9 +86,16 @@ export const GET_LABELS = gql`
 
 const getLabels = graphql(GET_LABELS, {
   props: ({ data }: any) => {
-    if (data.loading || data.error) {
+    if (data.loading) {
       return {
         labelsLoading: data.loading,
+        labels: [],
+        refetchLabels: data.refetch
+      };
+    }
+    if (data.error) {
+      return {
+        error: data.error,
         labels: [],
         refetchLabels: data.refetch
       };

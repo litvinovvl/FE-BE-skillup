@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { Redirect } from 'react-router';
 
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +9,7 @@ import { Field, Form, Formik } from 'formik';
 import { FormField } from '../FormField';
 import { Spinner } from '../Spinner';
 import { formSchema } from './formSchema';
-import { Redirect } from 'react-router';
+import { ErrorMessage } from '../ErrorMessage';
 
 interface IAddFormProps extends WithStyles<typeof styles> {
   addPodcast: (input: any) => any,
@@ -19,12 +20,15 @@ interface IAddFormProps extends WithStyles<typeof styles> {
   labels: any[],
   genresLoading: boolean,
   authorsLoading: boolean,
-  labelsLoading: boolean
+  labelsLoading: boolean,
+  error: any
 }
 
 interface IAddFormState {
   loading: boolean,
-  redirect: boolean
+  redirect: boolean,
+  errorOpen: boolean,
+  errorMessage: string
 }
 
 const init: any = {
@@ -42,7 +46,15 @@ const init: any = {
 class AddForm extends React.Component<IAddFormProps, IAddFormState> {
   public state = {
     loading: false,
-    redirect: false
+    redirect: false,
+    errorOpen: false,
+    errorMessage: ""
+  }
+
+  public componentDidUpdate(prevProps: any) {
+    if (prevProps.error !== this.props.error && !this.state.errorOpen) {
+      this.setState({ errorOpen: true });
+    }
   }
 
   public onSubmit = async (values: any) => {
@@ -67,8 +79,7 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
         this.setState(() => ({ loading: false, redirect: true }))
       }
     } catch (e) {
-      this.setState(() => ({ loading: false }))
-      console.log(e)
+      this.setState(() => ({ loading: false, errorOpen: true, errorMessage: e.message }))
     }
   }
 
@@ -102,8 +113,12 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
     )
   }
 
+  public handleCloseError = () => {
+    this.setState({ errorOpen: false });
+  };
+
   public render() {
-    const { classes: { container }, genresLoading, authorsLoading, labelsLoading } = this.props;
+    const { classes: { container, disable }, genresLoading, authorsLoading, labelsLoading, error: networkError } = this.props;
     const loading = genresLoading || authorsLoading || labelsLoading || this.state.loading;
 
     if (this.state.redirect) {
@@ -112,16 +127,22 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
 
     return (
       <>
+        {(networkError || this.state.errorMessage) &&
+          <ErrorMessage
+            open={this.state.errorOpen}
+            onClose={this.handleCloseError}
+            errorMessage={networkError ? networkError.message : this.state.errorMessage}
+          />
+        }
         {loading && <Spinner />}
         <Paper className={container}>
+          {networkError && <div className={disable} />}
           <h2>Add new podcast</h2>
-
           <Formik
             initialValues={init}
             onSubmit={this.onSubmit}
             render={this.renderForm}
           />
-
         </Paper>
       </>
     )
@@ -130,10 +151,21 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
 
 const styles = createStyles({
   container: {
+    position: "relative",
     width: "50%",
     marginTop: "20px",
     margin: "auto",
     padding: "30px"
+  },
+  disable: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "white",
+    opacity: 0.75,
+    zIndex: 1000,
   },
   form: {
     display: "flex",

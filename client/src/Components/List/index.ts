@@ -31,6 +31,7 @@ export const getPodcasts = graphql(GET_PODCASTS, {
   }),
   props: ({ data }: any) => {
     if (data.loading) return { loading: data.loading, podcasts: [] };
+    if (data.error) return { error: data.error, podcasts: [] };
     return {
       podcasts: data.getPodcasts,
       loading: false
