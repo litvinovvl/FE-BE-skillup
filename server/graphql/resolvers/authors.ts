@@ -1,15 +1,22 @@
 export {}
-const { getConnection, getRepository } = require('typeorm');
+const { getConnection } = require('typeorm');
 const { authors } = require('../../db/entity/authors');
 
 const getAuthors = async ({ labelId }) => {
-  const repo = getConnection().getRepository(authors);
+  try {
+    const repo = getConnection().getRepository(authors);
 
-  if (labelId) {
-    return await repo.find({ relations: ['label', 'label.authors'], where: { label: { id: labelId } } });
+    if (labelId) {
+      const label = await repo.find({ relations: ['label', 'label.authors'], where: { label: { id: labelId } } });
+
+      return label;
+    }
+    const label = await repo.find({ relations: ['label', 'label.authors'] });
+
+    return label;
+  } catch (e) {
+    throw new Error(e.message);
   }
-
-  return await repo.find({ relations: ['label', 'label.authors'] });
 };
 
 module.exports = {
