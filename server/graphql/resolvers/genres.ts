@@ -1,11 +1,16 @@
 export {}
-const { getConnection, getRepository } = require('typeorm');
+const { getConnection } = require('typeorm');
 const { genres } = require('../../db/entity/genres');
 
 const getGenres = async () => {
-  const repo = getConnection().getRepository(genres);
+  try {
+    const repo = getConnection().getRepository(genres);
+    const genresRes = await repo.find();
 
-  return await repo.find();
+    return genresRes;
+  } catch (e) {
+    throw new Error(e.message);
+  }
 };
 
 module.exports = {

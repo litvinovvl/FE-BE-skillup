@@ -5,53 +5,67 @@ const { podcasts } = require('../../db/entity/podcasts');
 const cloudinary = require('cloudinary').v2;
 
 const getPodcasts = async () => {
-  const repo = getConnection().getRepository(podcasts);
+  try {
+    const repo = getConnection().getRepository(podcasts);
+    const podcastsList = await repo.find({ relations: ['genre', 'author', 'author.label'] });
 
-  return await repo.find({ relations: ['genre', 'author', 'author.label'] });
+    return podcastsList;
+  } catch (e) {
+    throw new Error(e.message);
+  }
 };
 
 const addPodcast = async (podcast) => {
-  const { createReadStream } = await podcast.input.thumbnail;
+  try {
+    const { createReadStream } = await podcast.input.thumbnail;
 
-  let resultSecureUrl = '';
-  const cloudinaryUpload = async ({ stream }) => {
-    try {
-      await new Promise((resolve, reject) => {
-        const streamLoad = cloudinary.uploader.upload_stream(function (error, result) {
-          if (result) {
-            resultSecureUrl = result.secure_url;
-            resolve(resultSecureUrl)
-          } else {
-            reject(error);
-          }
+    let resultSecureUrl = '';
+    const cloudinaryUpload = async ({ stream }) => {
+      try {
+        await new Promise((resolve, reject) => {
+          const streamLoad = cloudinary.uploader.upload_stream(function (error, result) {
+            if (result) {
+              resultSecureUrl = result.secure_url;
+              resolve(resultSecureUrl)
+            } else {
+              reject(error);
+            }
+          });
+          stream.pipe(streamLoad);
         });
-        stream.pipe(streamLoad);
-      });
-    }
-    catch (err) {
-      throw new Error(`Failed to upload thumbnail! Err:${err}`);
-    }
-  };
+      }
+      catch (e) {
+        throw new Error(`Failed to upload thumbnail! Err:${e}`);
+      }
+    };
 
-  await cloudinaryUpload({ stream: createReadStream() });
+    await cloudinaryUpload({ stream: createReadStream() });
 
-  const repo = getConnection().getRepository(podcasts);
+    const repo = getConnection().getRepository(podcasts);
 
-  const podcastToSave = repo.create({
-    ...podcast.input,
-    thumbnail: resultSecureUrl,
-    release_date: podcast.input.date
-   });
+    const podcastToSave = repo.create({
+      ...podcast.input,
+      thumbnail: resultSecureUrl,
+      release_date: podcast.input.date
+    });
 
-   return await repo.save(podcastToSave);
+    const resPodcast = await repo.save(podcastToSave);
+
+    return resPodcast;
+  } catch (e) {
+    throw new Error(e.message);
+  }
 }
 
 const removePodcast = async ({ input: { id } }) => {
-  const repo = getConnection().getRepository(podcasts);
+  try {
+    const repo = getConnection().getRepository(podcasts);
+    await repo.delete(id);
 
-  await repo.delete(id);
-
-  return { id };
+    return { id };
+  } catch (e) {
+    throw new Error(e.message);
+  }
 }
 
 module.exports = {
