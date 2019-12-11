@@ -10,6 +10,7 @@ import { FormField } from '../FormField';
 import { Spinner } from '../Spinner';
 import { formSchema } from './formSchema';
 import { ErrorMessage } from '../ErrorMessage';
+import { ValidationSchema } from './validationSchema';
 
 interface IAddFormProps extends WithStyles<typeof styles> {
   addPodcast: (input: any) => any,
@@ -90,9 +91,8 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
     }
   }
 
-  public renderForm = () => {
+  public renderForm = ({ isValid, values: { thumbnail } }: any) => {
     const { classes: { form, submitButton }, genres, authors, labels } = this.props;
-
     const schema: any = formSchema(genres, authors, labels, this.refetch);
 
     return (
@@ -106,7 +106,7 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
           />
         ))}
 
-        <Button variant="contained" color="primary" type="submit" className={submitButton}>
+        <Button variant="contained" color="primary" type="submit" className={submitButton} disabled={!isValid || !thumbnail}>
           Add podcast
         </Button>
       </Form>
@@ -118,7 +118,7 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
   };
 
   public render() {
-    const { classes: { container, disable }, genresLoading, authorsLoading, labelsLoading, error: networkError } = this.props;
+    const { classes: { container, disable, note }, genresLoading, authorsLoading, labelsLoading, error: networkError } = this.props;
     const loading = genresLoading || authorsLoading || labelsLoading || this.state.loading;
 
     if (this.state.redirect) {
@@ -138,11 +138,14 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
         <Paper className={container}>
           {networkError && <div className={disable} />}
           <h2>Add new podcast</h2>
+          <p className={note}>* All fields are required</p>
           <Formik
             initialValues={init}
             onSubmit={this.onSubmit}
-            render={this.renderForm}
-          />
+            validationSchema={ValidationSchema}
+          >
+            {this.renderForm}
+          </Formik>
         </Paper>
       </>
     )
@@ -174,6 +177,10 @@ const styles = createStyles({
   },
   submitButton: {
     marginTop: "20px"
+  },
+  note: {
+    marginTop: -15,
+    fontSize: 10
   }
 });
 
