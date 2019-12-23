@@ -1,9 +1,10 @@
-import React from 'react';
-import { DateField } from './DateField';
-import { FileField } from './FileField';
-import { TextField } from './TextField';
+import React from "react";
 
-export default (props: any) => {
+import DateField from "./DateField";
+import FileField from "./FileField";
+import TextField from "./TextField";
+
+export default (props: any): JSX.Element => {
   switch (props.type) {
     case "text": return <TextField {...props} />;
     case "file": return <FileField {...props} />;

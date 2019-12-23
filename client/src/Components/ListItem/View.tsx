@@ -1,33 +1,38 @@
-import React from 'react';
-import { default as MUIListItem}  from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import { Spinner } from '../Spinner';
-import { ErrorMessage } from '../ErrorMessage';
+import React from "react";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { ListItem as MUIListItem, ListItemSecondaryAction, ListItemText, ListItemAvatar, Avatar, IconButton } from "@material-ui/core";
+
+import Spinner from "../Spinner";
+import ErrorMessage from "../ErrorMessage";
+import { Podcast } from "../../types";
 
 interface IListItemState {
-  loading: boolean,
-  errorOpen: boolean,
+  loading: boolean
+  errorOpen: boolean
   errorMessage: string
 }
 
+type RemovePodcastInput = {
+  variables: {
+    input: {
+      id: number
+    }
+  }
+}
+
 interface IListItemProps {
-  podcast: any,
-  removePodcast: (vars: any) => { id: number }
+  podcast: Podcast
+  removePodcast: (input: RemovePodcastInput) => { id: number }
 }
 
 class ListItem extends React.Component<IListItemProps, IListItemState> {
-  public state = {
+  public readonly state = {
     loading: false,
     errorOpen: false,
     errorMessage: ""
   }
 
-  public deletePodcast = async () => {
+  public deletePodcast = async (): Promise<void> => {
     const { podcast, removePodcast } = this.props;
 
     try {
@@ -39,11 +44,11 @@ class ListItem extends React.Component<IListItemProps, IListItemState> {
     }
   }
 
-  public handleCloseError = () => {
+  public handleCloseError = (): void => {
     this.setState({ errorOpen: false, errorMessage: "" });
   };
 
-  render() {
+  render(): JSX.Element {
     const { podcast } = this.props;
 
     return (

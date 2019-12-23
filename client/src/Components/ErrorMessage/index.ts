@@ -1,1 +1,3 @@
-export { default as ErrorMessage } from './View';
+import ErrorMessage from "./View";
+
+export default ErrorMessage;

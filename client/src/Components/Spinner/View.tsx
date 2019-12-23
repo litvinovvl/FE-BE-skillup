@@ -1,6 +1,6 @@
-import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import React from "react";
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 
 const styles = createStyles({
   wrapper: {
@@ -19,12 +19,12 @@ const styles = createStyles({
   }
 })
 
-interface ISpinnerProps extends WithStyles<typeof styles> {}
+interface ISpinnerProps extends WithStyles<typeof styles> {};
 
-const Spinner: React.SFC<ISpinnerProps> = ({ classes }) => (
-  <div className={classes.wrapper}>
+const Spinner: React.SFC<ISpinnerProps> = ({ classes: { wrapper } }): JSX.Element => (
+  <div className={wrapper}>
     <CircularProgress />
   </div>
-)
+);
 
 export default withStyles(styles)(Spinner);

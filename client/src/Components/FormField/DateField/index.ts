@@ -1,1 +1,3 @@
-export {default as DateField} from './View';
+import DateField from "./View";
+
+export default DateField;

@@ -1,14 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from "@material-ui/core/MenuItem";
+import { Genre, Author, Label } from "../../types";
 
-export const formSchema = (genres: any[], authors: any[], labels: any[], refetch: (fieldName: any, id: any) => void) => ({
+export const formSchema = (
+  genres: Genre[],
+  authors: Author[],
+  labels: Label[],
+  refetch: (fieldName: string, value: Author | Genre | Label | string ) => void
+) => ({
   author: {
     label: "Author",
     select: true,
     refetch,
-    children: authors.map((author: any) => (
-      <MenuItem key={author.name} value={author}>
+    children: authors.map((author: Author) => (
+      <MenuItem key={author.name} value={author as any}>
         {author.name}
       </MenuItem>
     ))
@@ -26,8 +32,8 @@ export const formSchema = (genres: any[], authors: any[], labels: any[], refetch
   label: {
     label: "Label",
     select: true,
-    children: labels.map((label: any) => (
-      <MenuItem key={label.name} value={label}>
+    children: labels.map((label: Label) => (
+      <MenuItem key={label.name} value={label as any}>
         {label.name}
       </MenuItem>
     )),
@@ -36,8 +42,8 @@ export const formSchema = (genres: any[], authors: any[], labels: any[], refetch
   genre: {
     label: "Genre",
     select: true,
-    children: genres.map((genre: any) => (
-      <MenuItem key={genre.name} value={genre}>
+    children: genres.map((genre: Genre) => (
+      <MenuItem key={genre.name} value={genre as any}>
         {genre.name}
       </MenuItem>
     )),

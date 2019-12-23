@@ -15,12 +15,12 @@ type Podcast {
   author: Author
   title: String!
   description: String
-  label: String
+  label: Label
   genre: Genre
   bpm: Int
   duration: Interval
   thumbnail: String
-  date: DateTime
+  release_date: DateTime
 }
 
 type Query {

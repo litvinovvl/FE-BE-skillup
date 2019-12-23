@@ -1,9 +1,17 @@
-import gql from 'graphql-tag';
-import { compose, graphql } from 'react-apollo';
-import ListItem from './View';
-import { GET_PODCASTS } from '../List';
+import gql from "graphql-tag";
+import { compose, graphql } from "react-apollo";
+import { GraphQLRequest } from "apollo-link";
 
-export const REMOVE_PODCAST = gql`
+import ListItem from "./View";
+import { GET_PODCASTS } from "../Podcasts";
+
+type Response = {
+  removePodcast: {
+    id: number
+  }
+}
+
+export const REMOVE_PODCAST: GraphQLRequest = gql`
   mutation removePodcast ($input: RemovePodcastInput!) {
     removePodcast (input: $input) {
       id
@@ -11,11 +19,11 @@ export const REMOVE_PODCAST = gql`
   }
 `;
 
-const removePodcast = graphql(REMOVE_PODCAST, {
-  name: 'removePodcast',
+const removePodcast = graphql<{}, Response, {}, {}>(REMOVE_PODCAST, {
+  name: "removePodcast",
   options: {
     refetchQueries: () => [{ query: GET_PODCASTS }],
-    onCompleted: ({ removePodcast: { id } }: any) => ({ id }),
+    onCompleted: ({ removePodcast: { id } }) => ({ id }),
   },
 });
 

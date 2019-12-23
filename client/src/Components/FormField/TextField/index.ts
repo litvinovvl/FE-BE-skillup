@@ -1,1 +1,3 @@
-export {default as TextField} from './View';
+import TextField from "./View";
+
+export default TextField;

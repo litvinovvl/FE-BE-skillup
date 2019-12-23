@@ -1,14 +1,13 @@
-import React from 'react';
-
-import Paper from '@material-ui/core/Paper';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import React from "react";
+import Paper from "@material-ui/core/Paper";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 
 interface IHomeProps extends WithStyles<typeof styles> {}
 
-const Home: React.SFC<IHomeProps> = ({ classes: { container, heading } }) => {
-  const FE = ['Typescript', 'React + Redux', 'Formik'];
-  const BE = ['Node JS', 'Typescript', 'Express', 'Postgresql + Typeorm'];
-  const tests = ['Jest + Enzyme', 'Mocha', 'Cypress'];
+const Home: React.SFC<IHomeProps> = ({ classes: { container, heading } }): JSX.Element => {
+  const FE = ["Typescript", "React + Redux", "Formik"];
+  const BE = ["Node JS", "Typescript", "Express", "Postgresql + Typeorm"];
+  const tests = ["Jest + Enzyme", "Mocha", "Cypress"];
 
   return (
     <Paper className={container}>
