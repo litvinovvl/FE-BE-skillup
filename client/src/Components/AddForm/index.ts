@@ -1,9 +1,51 @@
-import gql from 'graphql-tag';
-import { compose, graphql } from 'react-apollo';
-import AddForm from './View';
-import { GET_PODCASTS } from '../List';
+import gql from "graphql-tag";
+import { compose, graphql } from "react-apollo";
+import { GraphQLRequest } from "apollo-link";
 
-const ADD_PODCAST = gql`
+import AddForm from "./View";
+import { GET_PODCASTS } from "../Podcasts";
+import { Podcast, Genre, Author, Label } from "../../types";
+
+export type BaseFormValues = {
+  title: string
+  description: string
+  thumbnail: File
+  date: Date
+  bpm: number
+  duration: number
+}
+
+export interface IFormValues extends BaseFormValues {
+  label: number
+  author: number
+  genre: number
+}
+
+export interface IFormInput extends BaseFormValues {
+  label: {
+    id: number
+  }
+  author: {
+    id: number
+  }
+  genre: {
+    id: number
+  }
+}
+
+export type PodcastInput = {
+  variables: {
+    input: IFormValues
+  }
+}
+
+export type PodcastOutput = {
+  data: {
+    addPodcast: Podcast
+  }
+}
+
+const ADD_PODCAST: GraphQLRequest = gql`
   mutation addPodcast ($input: PodcastInput!) {
     addPodcast (input: $input) {
       title
@@ -11,15 +53,15 @@ const ADD_PODCAST = gql`
   }
 `;
 
-const addPodcast = graphql(ADD_PODCAST, {
-  name: 'addPodcast',
+const addPodcast = graphql<{}, PodcastOutput, { input: IFormValues }, {}>(ADD_PODCAST, {
+  name: "addPodcast",
   options: () => ({
-    onCompleted: ({ addPodcast }: any) => ({ ...addPodcast }),
+    onCompleted: (data) => (data),
     refetchQueries: () => [{ query: GET_PODCASTS }],
   })
 });
 
-export const GET_GENRES = gql`
+export const GET_GENRES: GraphQLRequest = gql`
   query {
     getGenres {
       id
@@ -28,18 +70,22 @@ export const GET_GENRES = gql`
   }
 `;
 
-const getGenres = graphql(GET_GENRES, {
-  props: ({ data }: any) => {
-    if (data.loading) return { genres: [], genresLoading: data.loading, };
-    if (data.error) return { genres: [], error: data.error };
+type GenresOutput = {
+  getGenres: Genre[]
+}
+
+const getGenres = graphql<{}, GenresOutput, {}, {}>(GET_GENRES, {
+  props: ({ data: { loading, error, getGenres } }) => {
+    if (loading) return { genres: [], genresLoading: loading };
+    if (error) return { genres: [], error: error };
     return {
-      genresLoading: data.loading,
-      genres: data.getGenres
+      genresLoading: loading,
+      genres: getGenres
     }
   },
 });
 
-export const GET_AUTHORS = gql`
+export const GET_AUTHORS: GraphQLRequest = gql`
   query getAuthors ($labelId: Int) {
     getAuthors (labelId: $labelId ) {
       id
@@ -51,31 +97,32 @@ export const GET_AUTHORS = gql`
   }
 `;
 
-const getAuthors = graphql(GET_AUTHORS, {
-  props: ({ data }: any) => {
-    if (data.loading) {
+type AuthorsOutput = {
+  getAuthors: Author[]
+}
+
+const getAuthors = graphql<{}, AuthorsOutput, {}, {}>(GET_AUTHORS, {
+  props: ({ data: { loading, error, getAuthors } }) => {
+    if (loading) {
       return {
-        authorsLoading: data.loading,
+        authorsLoading: loading,
         authors: [],
-        refetchAuthors: data.refetch
       }
     };
-    if (data.error) {
+    if (error) {
       return {
         authors: [],
-        refetchAuthors: data.refetch,
-        error: data.error
+        error: error
       }
     };
     return {
-      authorsLoading: data.loading,
-      authors: data.getAuthors,
-      refetchAuthors: data.refetch
+      authorsLoading: loading,
+      authors: getAuthors,
     }
   },
 });
 
-export const GET_LABELS = gql`
+export const GET_LABELS: GraphQLRequest = gql`
   query getLabels ($labelId: Int) {
     getLabels (labelId: $labelId ) {
       id
@@ -84,26 +131,30 @@ export const GET_LABELS = gql`
   }
 `;
 
-const getLabels = graphql(GET_LABELS, {
-  props: ({ data }: any) => {
-    if (data.loading) {
+type LabelsOutput = {
+  getLabels: Label[]
+}
+
+const getLabels = graphql<{}, LabelsOutput, {}, {}>(GET_LABELS, {
+  props: ({ data: { loading, error, refetch, getLabels } }) => {
+    if (loading) {
       return {
-        labelsLoading: data.loading,
+        labelsLoading: loading,
         labels: [],
-        refetchLabels: data.refetch
+        refetchLabels: refetch
       };
     }
-    if (data.error) {
+    if (error) {
       return {
-        error: data.error,
+        error: error,
         labels: [],
-        refetchLabels: data.refetch
+        refetchLabels: refetch
       };
     }
     return {
-      labelsLoading: data.loading,
-      labels: data.getLabels,
-      refetchLabels: data.refetch
+      labelsLoading: loading,
+      labels: getLabels,
+      refetchLabels: refetch
     }
   },
 });

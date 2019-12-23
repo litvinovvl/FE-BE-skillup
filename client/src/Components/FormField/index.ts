@@ -1,1 +1,3 @@
-export { default as FormField } from './View';
+import FormField from "./View";
+
+export default FormField;

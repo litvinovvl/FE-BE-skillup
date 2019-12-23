@@ -1,1 +1,3 @@
-export {default as Spinner} from './View';
+import Spinner from "./View";
+
+export default Spinner;

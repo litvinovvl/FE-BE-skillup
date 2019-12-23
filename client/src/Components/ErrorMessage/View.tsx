@@ -1,10 +1,7 @@
-import React from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import ErrorIcon from '@material-ui/icons/Error';
-import { createStyles, WithStyles, withStyles } from '@material-ui/core';
+import React from "react";
+import CloseIcon from "@material-ui/icons/Close";
+import ErrorIcon from "@material-ui/icons/Error";
+import { Snackbar, SnackbarContent, IconButton, createStyles, WithStyles, withStyles } from "@material-ui/core";
 
 interface IErrorMessageProps extends WithStyles<typeof styles> {
   open: boolean,
@@ -12,7 +9,7 @@ interface IErrorMessageProps extends WithStyles<typeof styles> {
   errorMessage: string
 }
 
-const ErrorMessage:React.SFC<IErrorMessageProps> = ({ classes: { error, message, errorIcon, closeIcon }, open, onClose, errorMessage }: any) => (
+const ErrorMessage:React.SFC<IErrorMessageProps> = ({ classes: { error, message, errorIcon, closeIcon }, open, onClose, errorMessage }) => (
   <Snackbar
     anchorOrigin={{
       vertical: "bottom",
@@ -46,8 +43,8 @@ const styles = createStyles({
     marginRight: 10
   },
   message: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   closeIcon: {
     fontSize: 20

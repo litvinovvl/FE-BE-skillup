@@ -1,1 +1,3 @@
-export { default as FileField } from './View';
+import FileField from "./View";
+
+export default FileField;

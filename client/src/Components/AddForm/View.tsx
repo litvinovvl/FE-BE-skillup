@@ -1,28 +1,28 @@
-import React from 'react';
-import moment from 'moment';
-import { Redirect } from 'react-router';
+import React from "react";
+import moment from "moment";
+import { Redirect } from "react-router";
+import { ApolloError } from "apollo-client";
+import { Field, Form, Formik, FormikProps } from "formik";
+import { Button, Paper, createStyles, WithStyles, withStyles } from "@material-ui/core";
 
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import { createStyles, WithStyles, withStyles } from '@material-ui/core';
-import { Field, Form, Formik } from 'formik';
-import { FormField } from '../FormField';
-import { Spinner } from '../Spinner';
-import { formSchema } from './formSchema';
-import { ErrorMessage } from '../ErrorMessage';
-import { ValidationSchema } from './validationSchema';
+import FormField from "../FormField";
+import Spinner from "../Spinner";
+import ErrorMessage from "../ErrorMessage";
+import { formSchema } from "./formSchema";
+import { ValidationSchema } from "./validationSchema";
+import { Genre, Author, Label } from "../../types";
+import { IFormInput, PodcastInput, PodcastOutput } from "./index";
 
 interface IAddFormProps extends WithStyles<typeof styles> {
-  addPodcast: (input: any) => any,
-  refetchLabels: (labelId: any) => void,
-  refetchAuthors: (labelId: any) => void,
-  genres: any[],
-  authors: any[],
-  labels: any[],
+  addPodcast: (input: PodcastInput) => PodcastOutput,
+  refetchLabels: (labelId: { labelId: number }) => void,
+  genres: Genre[],
+  authors: Author[],
+  labels: Label[],
   genresLoading: boolean,
   authorsLoading: boolean,
   labelsLoading: boolean,
-  error: any
+  error: ApolloError
 }
 
 interface IAddFormState {
@@ -32,33 +32,33 @@ interface IAddFormState {
   errorMessage: string
 }
 
-const init: any = {
-  author: '',
-  title: '',
-  description: '',
-  label: '',
-  genre: '',
-  bpm: '',
-  duration: '',
-  thumbnail: '',
+const init = {
+  author: "",
+  title: "",
+  description: "",
+  label: "",
+  genre: "",
+  bpm: "",
+  duration: "",
+  thumbnail: "",
   date: moment(),
 }
 
 class AddForm extends React.Component<IAddFormProps, IAddFormState> {
-  public state = {
+  public readonly state = {
     loading: false,
     redirect: false,
     errorOpen: false,
     errorMessage: ""
   }
 
-  public componentDidUpdate(prevProps: any) {
+  public componentDidUpdate(prevProps: IAddFormProps): void {
     if (prevProps.error !== this.props.error && !this.state.errorOpen) {
       this.setState({ errorOpen: true });
     }
   }
 
-  public onSubmit = async (values: any) => {
+  public onSubmit = async (values: IFormInput): Promise<void> => {
     const { addPodcast } = this.props;
 
     try {
@@ -84,16 +84,16 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
     }
   }
 
-  public refetch = (fieldName: any, value: any) => {
+  public refetch = (fieldName: string, value: Author): void => {
     const { refetchLabels } = this.props;
-    if (fieldName === 'author') {
+    if (fieldName === "author") {
       refetchLabels({ labelId: value.label.id });
     }
   }
 
-  public renderForm = ({ isValid, values: { thumbnail } }: any) => {
+  public renderForm = ({ isValid, values: { thumbnail } }: FormikProps<typeof init>): JSX.Element => {
     const { classes: { form, submitButton }, genres, authors, labels } = this.props;
-    const schema: any = formSchema(genres, authors, labels, this.refetch);
+    const schema = formSchema(genres, authors, labels, this.refetch);
 
     return (
       <Form className={form}>
@@ -102,7 +102,7 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
             key={index}
             name={key}
             component={FormField}
-            {...schema[key]}
+            {...schema[key as keyof typeof init]}
           />
         ))}
 
@@ -113,17 +113,13 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
     )
   }
 
-  public handleCloseError = () => {
-    this.setState({ errorOpen: false });
-  };
+  public handleCloseError = (): void => this.setState({ errorOpen: false });
 
-  public render() {
+  public render(): JSX.Element {
     const { classes: { container, disable, note }, genresLoading, authorsLoading, labelsLoading, error: networkError } = this.props;
     const loading = genresLoading || authorsLoading || labelsLoading || this.state.loading;
 
-    if (this.state.redirect) {
-      return <Redirect to="/podcasts/" />
-    }
+    if (this.state.redirect) return <Redirect to="/podcasts/" />;
 
     return (
       <>
@@ -141,7 +137,7 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
           <p className={note}>* All fields are required</p>
           <Formik
             initialValues={init}
-            onSubmit={this.onSubmit}
+            onSubmit={this.onSubmit as any}
             validationSchema={ValidationSchema}
           >
             {this.renderForm}

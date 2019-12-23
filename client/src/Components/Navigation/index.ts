@@ -1,1 +1,4 @@
-export {default as Navigation} from './View';
+import Navigation from "./View";
+
+export default Navigation;
+

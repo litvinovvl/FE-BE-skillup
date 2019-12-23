@@ -1,25 +1,29 @@
-import React from 'react';
+import React from "react";
+import { FieldProps } from "formik";
+import { Button, TextField} from "@material-ui/core";
 
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+interface IFileFieldState {
+  btnClicked: boolean
+}
 
-export default class FileField extends React.Component<any, any> {
-  public state = {
+interface IFileFieldProps extends FieldProps {}
+
+export default class FileField extends React.Component<IFileFieldProps, IFileFieldState> {
+  public readonly state = {
     btnClicked: false
   }
 
-  public handleFileChange = (event: any) => {
+  public handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { field, form: { setFieldValue } } = this.props;
 
-    setFieldValue(field.name, event.currentTarget!.files![0]);
+    setFieldValue(field.name, (event.currentTarget as HTMLInputElement).files![0]);
   }
 
-  public handleBtnClick = () => this.setState({ btnClicked: true });
+  public handleBtnClick = (): void => this.setState({ btnClicked: true });
 
-  public render() {
+  public render(): JSX.Element {
     const {
       field: { value = "", ...field},
-      displayedValue,
       ...props
     } = this.props;
 
@@ -28,7 +32,7 @@ export default class FileField extends React.Component<any, any> {
     return (
       <>
         <TextField
-          value={value.name || ''}
+          value={value.name || ""}
           margin="normal"
           variant="filled"
           error={Boolean(toShowError)}
@@ -41,7 +45,7 @@ export default class FileField extends React.Component<any, any> {
         />
         <input
           {...field}
-          {...props}
+          {...props as any}
           onChange={this.handleFileChange}
           id={field.name}
           style={{ display: "none" }}
