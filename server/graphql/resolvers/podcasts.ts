@@ -1,6 +1,6 @@
 import { getConnection } from "typeorm";
 import { podcasts } from "../../db/entity/podcasts";
-import { Podcast } from "typings";
+import { Podcast } from "../../typings";
 import { WriteStream, ReadStream } from "fs";
 
 const cloudinary = require('cloudinary').v2;
