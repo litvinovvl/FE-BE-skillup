@@ -2,57 +2,61 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 import { authors } from "./authors";
 import { genres } from "./genres";
 
-@Entity('podcasts', { schema:'public'} )
+@Entity("podcasts", { schema:"public"} )
 export class podcasts {
 
   @PrimaryGeneratedColumn({
-    type: 'integer',
-    name: 'id'
+    type: "integer",
+    name: "id"
   })
   id: number;
 
-  @Column('character varying', {
+  @Column("character varying", {
     nullable: false,
     length: 255,
-    name: 'title'
+    name: "title"
   })
   title: string;
 
   @ManyToOne(type => authors, authors => authors.podcasts, { nullable: false })
-  @JoinColumn({ name: 'authorId' })
+  @JoinColumn({ name: "authorId" })
   author: authors | null;
 
-  @Column('text', {
+  @Column("text", {
     nullable: false,
-    name: 'description'
+    name: "description"
   })
   description: string;
 
   @ManyToOne(type => genres, genres => genres.podcasts, { nullable: false })
-  @JoinColumn({ name:'genreId' })
+  @JoinColumn({ name:"genreId" })
   genre: genres | null;
 
-  @Column('integer', {
+  @Column("integer", {
     nullable: false,
-    name: 'bpm'
+    name: "bpm"
   })
   bpm: number;
 
-  @Column('interval', {
+  @Column("interval", {
     nullable: false,
-    name: 'duration'
+    name: "duration"
   })
-  duration: any;
+  duration: {
+    hours: number
+    minutes: number
+    seconds: number
+  } | number;
 
-  @Column('text', {
+  @Column("text", {
     nullable: true,
-    name: 'thumbnail'
+    name: "thumbnail"
   })
   thumbnail: string | null;
 
-  @Column('date', {
+  @Column("date", {
     nullable: false,
-    name: 'release_date'
+    name: "release_date"
   })
   release_date: string;
 

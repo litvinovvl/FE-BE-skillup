@@ -2,24 +2,24 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { labels } from "./labels";
 import { podcasts } from "./podcasts";
 
-@Entity('authors', { schema: 'public' })
+@Entity("authors", { schema: "public" })
 export class authors {
 
   @PrimaryGeneratedColumn({
-    type: 'integer',
-    name: 'id'
+    type: "integer",
+    name: "id"
   })
   id: number;
 
-  @Column('character varying', {
+  @Column("character varying", {
     nullable: false,
     length: 255,
-    name: 'name'
+    name: "name"
   })
   name: string;
 
   @ManyToOne(type => labels, labels => labels.authors, {})
-  @JoinColumn({ name: 'labelId' })
+  @JoinColumn({ name: "labelId" })
   label: labels | null;
 
   @OneToMany(type => podcasts, podcasts => podcasts.author)

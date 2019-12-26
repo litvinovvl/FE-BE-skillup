@@ -1,20 +1,20 @@
 import { Column, Entity, OneToMany } from "typeorm";
 import { authors } from "./authors";
 
-@Entity('labels', { schema:'public' })
+@Entity("labels", { schema:"public" })
 export class labels {
 
-  @Column('integer', {
+  @Column("integer", {
     nullable: false,
     primary: true,
-    name: 'id'
+    name: "id"
   })
   id: number;
 
-  @Column('character varying', {
+  @Column("character varying", {
     nullable: false,
     length: 255,
-    name: 'name'
+    name: "name"
   })
   name: string;
 
