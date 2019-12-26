@@ -1,5 +1,5 @@
 #!/usr/bin/nodejs
-
+require("dotenv").config();
 const nodeEnv = "development";
 
 const app = require("../app.ts");
