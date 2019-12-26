@@ -1,24 +1,26 @@
-export {}
-const { getConnection } = require('typeorm');
-const { authors } = require('../../db/entity/authors');
+import { getConnection } from "typeorm";
 
-const getAuthors = async ({ labelId }) => {
+import { authors } from "../../db/entity/authors";
+
+type getAuthorsInput = { labelId: number };
+
+const getAuthors = async ({ labelId }: getAuthorsInput) => {
   try {
     const repo = getConnection().getRepository(authors);
 
     if (labelId) {
-      const label = await repo.find({ relations: ['label', 'label.authors'], where: { label: { id: labelId } } });
+      const author = await repo.find({ relations: ["label", "label.authors"], where: { label: { id: labelId } } });
 
-      return label;
+      return author;
     }
-    const label = await repo.find({ relations: ['label', 'label.authors'] });
+    const author = await repo.find({ relations: ["label", "label.authors"] });
 
-    return label;
+    return author;
   } catch (e) {
-    throw new Error(e.message);
+    throw new Error(e.message as string);
   }
 };
 
-module.exports = {
+export default {
   getAuthors
 };

@@ -1,14 +1,15 @@
-const { Router } = require('express');
-const graphqlHTTP = require('express-graphql');
-const rootSchema = require('./types/index.ts');
-const rootResolvers = require('./resolvers/index.ts');
+import * as graphqlHTTP from "express-graphql";
+import { Router } from "express";
+
+import rootSchema from "./types";
+import rootResolvers from "./resolvers";
 
 const router = Router();
 
-router.all('/', graphqlHTTP({
+router.all("/", graphqlHTTP({
   schema: rootSchema,
   rootValue: rootResolvers,
   graphiql: true
 }));
 
-module.exports = router;
+export default router;

@@ -1,21 +1,22 @@
-var createError = require('http-errors');
-var express = require('express');
-var cookieParser = require('cookie-parser');
-const cors = require('cors');
-var logger = require('morgan');
-const { graphqlUploadExpress } = require('graphql-upload');
+import createError from "http-errors";
+import * as express from "express";
+import * as cookieParser from "cookie-parser";
+import * as cors from "cors";
+import * as logger from "morgan";
+import { graphqlUploadExpress } from "graphql-upload";
 
-const graphql = require('./graphql/index.ts');
-var app = express();
+import graphql from "./graphql";
+
+const app = express();
 
 app.use(cors());
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(
-  '/graphql',
+  "/graphql",
   graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }),
   graphql
 );
@@ -29,11 +30,11 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 module.exports = app;

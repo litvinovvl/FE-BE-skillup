@@ -1,6 +1,5 @@
-export {}
-const { getConnection } = require('typeorm');
-const { genres } = require('../../db/entity/genres');
+import { getConnection } from "typeorm";
+import { genres } from "../../db/entity/genres";
 
 const getGenres = async () => {
   try {
@@ -9,10 +8,10 @@ const getGenres = async () => {
 
     return genresRes;
   } catch (e) {
-    throw new Error(e.message);
+    throw new Error(e.message as string);
   }
 };
 
-module.exports = {
+export default {
   getGenres
 };

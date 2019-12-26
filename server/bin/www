@@ -1,16 +1,16 @@
 #!/usr/bin/nodejs
 
-const nodeEnv = 'development';
+const nodeEnv = "development";
 
-const app = require('../app.ts');
-const connection = require('../db/index.ts');
+const app = require("../app.ts");
+const connection = require("../db/index.ts");
 
-app.set('port', 5000);
+app.set("port", 5000);
 
 let server;
 
 connection().then(() => {
-  server = app.listen(app.get('port'), () => {
+  server = app.listen(app.get("port"), () => {
     console.log(`Express server listening on port ${server.address().port}`);
   });
 });

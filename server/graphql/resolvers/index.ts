@@ -1,9 +1,9 @@
-const labels = require('./labels');
-const genres = require('./genres');
-const authors = require('./authors');
-const podcasts = require('./podcasts');
+import labels from "./labels";
+import genres from "./genres";
+import authors from "./authors";
+import podcasts from "./podcasts";
 
-module.exports = {
+export default {
   ...labels,
   ...genres,
   ...authors,

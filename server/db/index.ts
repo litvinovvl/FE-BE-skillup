@@ -1,6 +1,6 @@
-const {createConnection} = require("typeorm");
+import { createConnection, Connection } from "typeorm";
 
-const connection = async () => await createConnection({
+const connection = async (): Promise<Connection> => await createConnection({
     type: "postgres",
     host: "localhost",
     port: 5432,
