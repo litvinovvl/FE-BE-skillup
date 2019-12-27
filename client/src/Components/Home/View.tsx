@@ -1,5 +1,6 @@
-import React from "react";
 import Paper from "@material-ui/core/Paper";
+import React from "react";
+
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 
 interface IHomeProps extends WithStyles<typeof styles> {}

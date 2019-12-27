@@ -1,14 +1,13 @@
 import React from "react";
-import { FieldProps } from "formik";
+
 import { Button, TextField} from "@material-ui/core";
+import { FieldProps } from "formik";
 
 interface IFileFieldState {
   btnClicked: boolean
 }
 
-interface IFileFieldProps extends FieldProps {}
-
-export default class FileField extends React.Component<IFileFieldProps, IFileFieldState> {
+export default class FileField extends React.Component<FieldProps, IFileFieldState> {
   public readonly state = {
     btnClicked: false
   }

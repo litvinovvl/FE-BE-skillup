@@ -1,19 +1,19 @@
-import { getConnection } from "typeorm";
-import { labels } from "../../db/entity/labels";
+import { getConnection } from 'typeorm';
+import { Labels } from '../../db/entity/labels';
 
-type getLabelsInput = { labelId: number };
+interface IGetLabelsInput { labelId: number; }
 
-const getLabels = async ({ labelId }: getLabelsInput) => {
+const getLabels = async ({ labelId }: IGetLabelsInput) => {
   try {
-    const repo = getConnection().getRepository(labels);
+    const repo = getConnection().getRepository(Labels);
 
     if (labelId) {
-      const authorsList = await repo.find({ relations: ["authors"], where: { id: labelId } });
+      const authorsListById = await repo.find({ relations: ['authors'], where: { id: labelId } });
 
-      return authorsList;
+      return authorsListById;
     }
 
-    const authorsList = await repo.find({ relations: ["authors"]});
+    const authorsList = await repo.find({ relations: ['authors'] });
 
     return authorsList;
   } catch (e) {
@@ -22,5 +22,5 @@ const getLabels = async ({ labelId }: getLabelsInput) => {
 };
 
 export default {
-  getLabels
+  getLabels,
 };

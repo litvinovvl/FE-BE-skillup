@@ -1,11 +1,13 @@
 import gql from "graphql-tag";
-import { compose, graphql } from "react-apollo";
+
 import { GraphQLRequest } from "apollo-link";
+import { compose, graphql } from "react-apollo";
 
 import ListItem from "./View";
+
 import { GET_PODCASTS } from "../Podcasts";
 
-type Response = {
+interface IResponse {
   removePodcast: {
     id: number
   }
@@ -19,7 +21,7 @@ export const REMOVE_PODCAST: GraphQLRequest = gql`
   }
 `;
 
-const removePodcast = graphql<{}, Response, {}, {}>(REMOVE_PODCAST, {
+const removePodcast = graphql<{}, IResponse, {}, {}>(REMOVE_PODCAST, {
   name: "removePodcast",
   options: {
     refetchQueries: () => [{ query: GET_PODCASTS }],

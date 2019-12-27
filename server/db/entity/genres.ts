@@ -1,24 +1,24 @@
-import { Column, Entity, OneToMany } from "typeorm";
-import { podcasts } from "./podcasts";
+import { Column, Entity, OneToMany } from 'typeorm';
+import { Podcasts } from './podcasts';
 
-@Entity("genres", { schema: "public" } )
-export class genres {
+@Entity('genres', { schema: 'public' })
+export class Genres {
 
-  @Column("integer", {
+  @Column('integer', {
     nullable: false,
     primary: true,
-    name: "id"
+    name: 'id',
   })
-  id: number;
+  public id: number;
 
-  @Column("character varying", {
+  @Column('character varying', {
     nullable: false,
     length: 255,
-    name: "name"
+    name: 'name',
   })
-  name: string;
+  public name: string;
 
-  @OneToMany(type => podcasts, podcasts => podcasts.genre)
-  podcasts: podcasts[];
+  @OneToMany(type => Podcasts, podcasts => podcasts.genre)
+  public podcasts: Podcasts[];
 
 }

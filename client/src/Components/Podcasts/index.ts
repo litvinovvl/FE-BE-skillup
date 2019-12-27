@@ -1,8 +1,11 @@
 import gql from "graphql-tag";
-import { compose, graphql, ChildDataProps, DataValue } from "react-apollo";
+
 import { GraphQLRequest } from "apollo-link";
+import { compose, graphql } from "react-apollo";
+
 import Podcasts from "./View";
-import { Podcast } from "../../types";
+
+import { IPodcast } from "../../types";
 
 export const GET_PODCASTS: GraphQLRequest = gql`
   query {
@@ -30,19 +33,19 @@ export const GET_PODCASTS: GraphQLRequest = gql`
   }
 `;
 
-type Response = {
-  getPodcasts: Podcast[]
+interface IResponse {
+  getPodcasts: IPodcast[]
 }
 
-export const getPodcasts = graphql<{}, Response, {}, {}>(GET_PODCASTS, {
+export const getPodcasts = graphql<{}, IResponse, {}, {}>(GET_PODCASTS, {
   options: {
     fetchPolicy: "network-only"
   },
-  props: ({ data: { loading, error, getPodcasts } }) => {
+  props: ({ data: { loading, error, getPodcasts: podcasts } }) => {
     if (loading) return { loading, podcasts: [] };
     if (error) return { error, podcasts: [] };
     return {
-      podcasts: getPodcasts,
+      podcasts,
       loading: false
     }
   },

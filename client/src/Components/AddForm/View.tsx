@@ -1,24 +1,26 @@
-import React from "react";
 import moment from "moment";
-import { Redirect } from "react-router";
+import React from "react";
+
+import { Button, createStyles, Paper, withStyles, WithStyles } from "@material-ui/core";
 import { ApolloError } from "apollo-client";
 import { Field, Form, Formik, FormikProps } from "formik";
-import { Button, Paper, createStyles, WithStyles, withStyles } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
 
+import ErrorMessage from "../ErrorMessage";
 import FormField from "../FormField";
 import Spinner from "../Spinner";
-import ErrorMessage from "../ErrorMessage";
+
+import { IAuthor, IGenre, ILabel } from "../../types";
 import { formSchema } from "./formSchema";
+import { IFormInput, IPodcastInput, IPodcastOutput } from "./index";
 import { ValidationSchema } from "./validationSchema";
-import { Genre, Author, Label } from "../../types";
-import { IFormInput, PodcastInput, PodcastOutput } from "./index";
 
 interface IAddFormProps extends WithStyles<typeof styles> {
-  addPodcast: (input: PodcastInput) => PodcastOutput,
+  addPodcast: (input: IPodcastInput) => IPodcastOutput,
   refetchLabels: (labelId: { labelId: number }) => void,
-  genres: Genre[],
-  authors: Author[],
-  labels: Label[],
+  genres: IGenre[],
+  authors: IAuthor[],
+  labels: ILabel[],
   genresLoading: boolean,
   authorsLoading: boolean,
   labelsLoading: boolean,
@@ -84,7 +86,7 @@ class AddForm extends React.Component<IAddFormProps, IAddFormState> {
     }
   }
 
-  public refetch = (fieldName: string, value: Author): void => {
+  public refetch = (fieldName: string, value: IAuthor): void => {
     const { refetchLabels } = this.props;
     if (fieldName === "author") {
       refetchLabels({ labelId: value.label.id });

@@ -1,6 +1,7 @@
-import { fileLoader, mergeTypes } from "merge-graphql-schemas"
-const { buildSchema } = require("graphql");
+import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
 
-const typeDefs = mergeTypes(fileLoader(`${__dirname}/*.gql`), { all: true })
+const { buildSchema } = require('graphql');
+
+const typeDefs = mergeTypes(fileLoader(`${__dirname}/*.gql`), { all: true });
 
 export default buildSchema(typeDefs);

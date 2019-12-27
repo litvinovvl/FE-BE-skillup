@@ -1,7 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+
 import { AppBar, Button, CssBaseline, Toolbar, Typography } from "@material-ui/core";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { NavLink } from "react-router-dom";
 
 interface INavigationProps extends WithStyles<typeof styles> {}
 

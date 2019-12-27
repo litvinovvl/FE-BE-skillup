@@ -1,16 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { ApolloError } from "apollo-client";
-import { Paper, Button, List, Typography } from "@material-ui/core";
-import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
 
+import { Button, List, Paper, Typography } from "@material-ui/core";
+import { createStyles, withStyles, WithStyles } from "@material-ui/core/styles";
+import { ApolloError } from "apollo-client";
+import { Link } from "react-router-dom";
+
+import ErrorMessage from "../ErrorMessage";
 import ListItem from "../ListItem";
 import Spinner from "../Spinner";
-import ErrorMessage from "../ErrorMessage";
-import { Podcast } from "../../types";
+
+import { IPodcast } from "../../types";
 
 interface IPodcastsListProps extends WithStyles<typeof styles> {
-  podcasts: Podcast[]
+  podcasts: IPodcast[]
   loading: boolean
   error: ApolloError
 }
@@ -35,7 +37,7 @@ class Podcasts extends React.Component<IPodcastsListProps, IPodcastsListState> {
 
     if (podcasts.length) {
       return (
-        podcasts.map((podcast: Podcast) => (
+        podcasts.map((podcast: IPodcast) => (
           <ListItem key={podcast.id} podcast={podcast} />
         ))
       )
@@ -60,7 +62,7 @@ class Podcasts extends React.Component<IPodcastsListProps, IPodcastsListState> {
     this.setState({ errorOpen: false });
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { classes, error: networkError, loading } = this.props;
 
     return (

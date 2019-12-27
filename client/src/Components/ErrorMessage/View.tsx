@@ -1,7 +1,8 @@
-import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import ErrorIcon from "@material-ui/icons/Error";
-import { Snackbar, SnackbarContent, IconButton, createStyles, WithStyles, withStyles } from "@material-ui/core";
+import React from "react";
+
+import { createStyles, IconButton, Snackbar, SnackbarContent, withStyles, WithStyles } from "@material-ui/core";
 
 interface IErrorMessageProps extends WithStyles<typeof styles> {
   open: boolean,

@@ -1,11 +1,12 @@
 import React from "react";
-import { FieldProps } from "formik";
-import { TextField as MUITextField } from "@material-ui/core";
 
-import { Author, Genre, Label } from "../../../types";
+import { TextField as MUITextField } from "@material-ui/core";
+import { FieldProps } from "formik";
+
+import { IAuthor, IGenre, ILabel } from "../../../types";
 
 interface ITextFieldProps extends FieldProps {
-  refetch: (fieldName: string, value: Author | Genre | Label | string) => void
+  refetch: (fieldName: string, value: IAuthor | IGenre | ILabel | string) => void
 }
 
 const TextField: React.SFC<ITextFieldProps> = ({

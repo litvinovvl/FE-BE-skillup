@@ -1,24 +1,24 @@
-import { Column, Entity, OneToMany } from "typeorm";
-import { authors } from "./authors";
+import { Column, Entity, OneToMany } from 'typeorm';
+import { Authors } from './authors';
 
-@Entity("labels", { schema:"public" })
-export class labels {
+@Entity('labels', { schema:'public' })
+export class Labels {
 
-  @Column("integer", {
+  @Column('integer', {
     nullable: false,
     primary: true,
-    name: "id"
+    name: 'id',
   })
-  id: number;
+  public id: number;
 
-  @Column("character varying", {
+  @Column('character varying', {
     nullable: false,
     length: 255,
-    name: "name"
+    name: 'name',
   })
-  name: string;
+  public name: string;
 
-  @OneToMany(type => authors, authors => authors.label)
-  authors: authors[];
+  @OneToMany(type => Authors, authors => authors.label)
+  public authors: Authors[];
 
 }

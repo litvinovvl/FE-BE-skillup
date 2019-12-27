@@ -1,28 +1,29 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { labels } from "./labels";
-import { podcasts } from "./podcasts";
+/* tslint:disable:no-shadowed-variable */
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Labels } from './labels';
+import { Podcasts } from './podcasts';
 
-@Entity("authors", { schema: "public" })
-export class authors {
+@Entity('authors', { schema: 'public' })
+export class Authors {
 
   @PrimaryGeneratedColumn({
-    type: "integer",
-    name: "id"
+    type: 'integer',
+    name: 'id',
   })
-  id: number;
+  public id: number;
 
-  @Column("character varying", {
+  @Column('character varying', {
     nullable: false,
     length: 255,
-    name: "name"
+    name: 'name',
   })
-  name: string;
+  public name: string;
 
-  @ManyToOne(type => labels, labels => labels.authors, {})
-  @JoinColumn({ name: "labelId" })
-  label: labels | null;
+  @ManyToOne(type => Labels, labels => labels.authors, {})
+  @JoinColumn({ name: 'labelId' })
+  public label: Labels | null;
 
-  @OneToMany(type => podcasts, podcasts => podcasts.author)
-  podcasts: podcasts[];
+  @OneToMany(type => Podcasts, podcasts => podcasts.author)
+  public podcasts: Podcasts[];
 
 }

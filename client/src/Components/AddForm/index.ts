@@ -1,12 +1,14 @@
 import gql from "graphql-tag";
-import { compose, graphql } from "react-apollo";
+
 import { GraphQLRequest } from "apollo-link";
+import { compose, graphql } from "react-apollo";
 
 import AddForm from "./View";
-import { GET_PODCASTS } from "../Podcasts";
-import { Podcast, Genre, Author, Label } from "../../types";
 
-export type BaseFormValues = {
+import { IAuthor, IGenre, ILabel, IPodcast } from "../../types";
+import { GET_PODCASTS } from "../Podcasts";
+
+export interface IBaseFormValues {
   title: string
   description: string
   thumbnail: File
@@ -15,13 +17,13 @@ export type BaseFormValues = {
   duration: number
 }
 
-export interface IFormValues extends BaseFormValues {
+export interface IFormValues extends IBaseFormValues {
   label: number
   author: number
   genre: number
 }
 
-export interface IFormInput extends BaseFormValues {
+export interface IFormInput extends IBaseFormValues {
   label: {
     id: number
   }
@@ -33,15 +35,15 @@ export interface IFormInput extends BaseFormValues {
   }
 }
 
-export type PodcastInput = {
+export interface IPodcastInput {
   variables: {
     input: IFormValues
   }
 }
 
-export type PodcastOutput = {
+export interface IPodcastOutput {
   data: {
-    addPodcast: Podcast
+    addPodcast: IPodcast
   }
 }
 
@@ -53,7 +55,7 @@ const ADD_PODCAST: GraphQLRequest = gql`
   }
 `;
 
-const addPodcast = graphql<{}, PodcastOutput, { input: IFormValues }, {}>(ADD_PODCAST, {
+const addPodcast = graphql<{}, IPodcastOutput, { input: IFormValues }, {}>(ADD_PODCAST, {
   name: "addPodcast",
   options: () => ({
     onCompleted: (data) => (data),
@@ -70,17 +72,17 @@ export const GET_GENRES: GraphQLRequest = gql`
   }
 `;
 
-type GenresOutput = {
-  getGenres: Genre[]
+interface IGenresOutput {
+  getGenres: IGenre[]
 }
 
-const getGenres = graphql<{}, GenresOutput, {}, {}>(GET_GENRES, {
-  props: ({ data: { loading, error, getGenres } }) => {
+const getGenres = graphql<{}, IGenresOutput, {}, {}>(GET_GENRES, {
+  props: ({ data: { loading, error, getGenres: genres } }) => {
     if (loading) return { genres: [], genresLoading: loading };
-    if (error) return { genres: [], error: error };
+    if (error) return { genres: [], error };
     return {
       genresLoading: loading,
-      genres: getGenres
+      genres
     }
   },
 });
@@ -97,12 +99,12 @@ export const GET_AUTHORS: GraphQLRequest = gql`
   }
 `;
 
-type AuthorsOutput = {
-  getAuthors: Author[]
+interface IAuthorsOutput {
+  getAuthors: IAuthor[]
 }
 
-const getAuthors = graphql<{}, AuthorsOutput, {}, {}>(GET_AUTHORS, {
-  props: ({ data: { loading, error, getAuthors } }) => {
+const getAuthors = graphql<{}, IAuthorsOutput, {}, {}>(GET_AUTHORS, {
+  props: ({ data: { loading, error, getAuthors: authors } }) => {
     if (loading) {
       return {
         authorsLoading: loading,
@@ -112,12 +114,12 @@ const getAuthors = graphql<{}, AuthorsOutput, {}, {}>(GET_AUTHORS, {
     if (error) {
       return {
         authors: [],
-        error: error
+        error
       }
     };
     return {
       authorsLoading: loading,
-      authors: getAuthors,
+      authors
     }
   },
 });
@@ -131,12 +133,12 @@ export const GET_LABELS: GraphQLRequest = gql`
   }
 `;
 
-type LabelsOutput = {
-  getLabels: Label[]
+interface ILabelsOutput {
+  getLabels: ILabel[]
 }
 
-const getLabels = graphql<{}, LabelsOutput, {}, {}>(GET_LABELS, {
-  props: ({ data: { loading, error, refetch, getLabels } }) => {
+const getLabels = graphql<{}, ILabelsOutput, {}, {}>(GET_LABELS, {
+  props: ({ data: { loading, error, refetch, getLabels: labels } }) => {
     if (loading) {
       return {
         labelsLoading: loading,
@@ -146,14 +148,14 @@ const getLabels = graphql<{}, LabelsOutput, {}, {}>(GET_LABELS, {
     }
     if (error) {
       return {
-        error: error,
+        error,
         labels: [],
         refetchLabels: refetch
       };
     }
     return {
       labelsLoading: loading,
-      labels: getLabels,
+      labels,
       refetchLabels: refetch
     }
   },

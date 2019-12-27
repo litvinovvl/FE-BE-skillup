@@ -1,10 +1,12 @@
-import React from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { ListItem as MUIListItem, ListItemSecondaryAction, ListItemText, ListItemAvatar, Avatar, IconButton } from "@material-ui/core";
+import React from "react";
 
-import Spinner from "../Spinner";
+import { Avatar, IconButton, ListItem as MUIListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+
 import ErrorMessage from "../ErrorMessage";
-import { Podcast } from "../../types";
+import Spinner from "../Spinner";
+
+import { IPodcast } from "../../types";
 
 interface IListItemState {
   loading: boolean
@@ -12,7 +14,7 @@ interface IListItemState {
   errorMessage: string
 }
 
-type RemovePodcastInput = {
+interface IRemovePodcastInput {
   variables: {
     input: {
       id: number
@@ -21,8 +23,8 @@ type RemovePodcastInput = {
 }
 
 interface IListItemProps {
-  podcast: Podcast
-  removePodcast: (input: RemovePodcastInput) => { id: number }
+  podcast: IPodcast
+  removePodcast: (input: IRemovePodcastInput) => { id: number }
 }
 
 class ListItem extends React.Component<IListItemProps, IListItemState> {
@@ -48,7 +50,7 @@ class ListItem extends React.Component<IListItemProps, IListItemState> {
     this.setState({ errorOpen: false, errorMessage: "" });
   };
 
-  render(): JSX.Element {
+  public render(): JSX.Element {
     const { podcast } = this.props;
 
     return (

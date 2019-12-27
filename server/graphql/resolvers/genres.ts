@@ -1,9 +1,9 @@
-import { getConnection } from "typeorm";
-import { genres } from "../../db/entity/genres";
+import { getConnection } from 'typeorm';
+import { Genres } from '../../db/entity/genres';
 
 const getGenres = async () => {
   try {
-    const repo = getConnection().getRepository(genres);
+    const repo = getConnection().getRepository(Genres);
     const genresRes = await repo.find();
 
     return genresRes;
@@ -13,5 +13,5 @@ const getGenres = async () => {
 };
 
 export default {
-  getGenres
+  getGenres,
 };

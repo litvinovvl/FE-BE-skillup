@@ -1,26 +1,26 @@
-export type Label = {
+export interface ILabel {
   id: number
   name: string
 }
 
-export type Genre = {
+export interface IGenre {
   id: number
   name: string
 }
 
-export type Author = {
+export interface IAuthor {
   id: number
   name: string
-  label: Label
+  label: ILabel
 }
 
-export type Podcast = {
+export interface IPodcast {
   id: number
-  author: Author
+  author: IAuthor
   title: string
   description: string
   label: string
-  genre: Genre
+  genre: IGenre
   bpm: number
   duration: {
     hours: number

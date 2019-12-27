@@ -1,19 +1,19 @@
+import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 
-import MenuItem from "@material-ui/core/MenuItem";
-import { Genre, Author, Label } from "../../types";
+import { IAuthor, IGenre, ILabel } from "../../types";
 
 export const formSchema = (
-  genres: Genre[],
-  authors: Author[],
-  labels: Label[],
-  refetch: (fieldName: string, value: Author | Genre | Label | string ) => void
+  genres: IGenre[],
+  authors: IAuthor[],
+  labels: ILabel[],
+  refetch: (fieldName: string, value: IAuthor | IGenre | ILabel | string ) => void
 ) => ({
   author: {
     label: "Author",
     select: true,
     refetch,
-    children: authors.map((author: Author) => (
+    children: authors.map((author: IAuthor) => (
       <MenuItem key={author.name} value={author as any}>
         {author.name}
       </MenuItem>
@@ -32,7 +32,7 @@ export const formSchema = (
   label: {
     label: "Label",
     select: true,
-    children: labels.map((label: Label) => (
+    children: labels.map((label: ILabel) => (
       <MenuItem key={label.name} value={label as any}>
         {label.name}
       </MenuItem>
@@ -42,7 +42,7 @@ export const formSchema = (
   genre: {
     label: "Genre",
     select: true,
-    children: genres.map((genre: Genre) => (
+    children: genres.map((genre: IGenre) => (
       <MenuItem key={genre.name} value={genre as any}>
         {genre.name}
       </MenuItem>

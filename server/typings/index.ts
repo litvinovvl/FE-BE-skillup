@@ -1,29 +1,29 @@
-import { FileUpload } from "graphql-upload"
+import { FileUpload } from 'graphql-upload';
 
-export type Label = {
-  id: number
-  name: string
+export interface ILabel {
+  id: number;
+  name: string;
 }
 
-export type Genre = {
-  id: number
-  name: string
+export interface IGenre {
+  id: number;
+  name: string;
 }
 
-export type Author = {
-  id: number
-  name: string
-  label: Label
+export interface IAuthor {
+  id: number;
+  name: string;
+  label: ILabel;
 }
 
-export type Podcast = {
-  id: number
-  author: Author
-  title: string
-  description: string
-  genre: Genre
-  bpm: number
-  duration: number
-  thumbnail: FileUpload
-  date: string
+export interface IPodcast {
+  id: number;
+  author: IAuthor;
+  title: string;
+  description: string;
+  genre: IGenre;
+  bpm: number;
+  duration: number;
+  thumbnail: FileUpload;
+  date: string;
 }

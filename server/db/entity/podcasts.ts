@@ -1,63 +1,63 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { authors } from "./authors";
-import { genres } from "./genres";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Authors } from './authors';
+import { Genres } from './genres';
 
-@Entity("podcasts", { schema:"public"} )
-export class podcasts {
+@Entity('podcasts', { schema:'public' })
+export class Podcasts {
 
   @PrimaryGeneratedColumn({
-    type: "integer",
-    name: "id"
+    type: 'integer',
+    name: 'id',
   })
-  id: number;
+  public id: number;
 
-  @Column("character varying", {
+  @Column('character varying', {
     nullable: false,
     length: 255,
-    name: "title"
+    name: 'title',
   })
-  title: string;
+  public title: string;
 
-  @ManyToOne(type => authors, authors => authors.podcasts, { nullable: false })
-  @JoinColumn({ name: "authorId" })
-  author: authors | null;
+  @ManyToOne(type => Authors, authors => authors.podcasts, { nullable: false })
+  @JoinColumn({ name: 'authorId' })
+  public author: Authors | null;
 
-  @Column("text", {
+  @Column('text', {
     nullable: false,
-    name: "description"
+    name: 'description',
   })
-  description: string;
+  public description: string;
 
-  @ManyToOne(type => genres, genres => genres.podcasts, { nullable: false })
-  @JoinColumn({ name:"genreId" })
-  genre: genres | null;
+  @ManyToOne(type => Genres, genres => genres.podcasts, { nullable: false })
+  @JoinColumn({ name:'genreId' })
+  public genre: Genres | null;
 
-  @Column("integer", {
+  @Column('integer', {
     nullable: false,
-    name: "bpm"
+    name: 'bpm',
   })
-  bpm: number;
+  public bpm: number;
 
-  @Column("interval", {
+  @Column('interval', {
     nullable: false,
-    name: "duration"
+    name: 'duration',
   })
-  duration: {
-    hours: number
-    minutes: number
-    seconds: number
+  public duration: {
+    hours: number,
+    minutes: number,
+    seconds: number,
   } | number;
 
-  @Column("text", {
+  @Column('text', {
     nullable: true,
-    name: "thumbnail"
+    name: 'thumbnail',
   })
-  thumbnail: string | null;
+  public thumbnail: string | null;
 
-  @Column("date", {
+  @Column('date', {
     nullable: false,
-    name: "release_date"
+    name: 'release_date',
   })
-  release_date: string;
+  public release_date: string;
 
 }
