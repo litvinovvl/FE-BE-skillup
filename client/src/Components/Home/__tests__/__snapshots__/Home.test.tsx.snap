@@ -3,9 +3,9 @@
 exports[`Home component should match snapshot 1`] = `
 "<WithStyles(Home)>
   <Home classes={{...}}>
-    <WithStyles(Paper) className=\\"Home-container-1\\">
-      <Paper className=\\"Home-container-1\\" classes={{...}} component=\\"div\\" elevation={2} square={false}>
-        <div className=\\"MuiPaper-root-3 MuiPaper-elevation2-7 MuiPaper-rounded-4 Home-container-1\\">
+    <WithStyles(ForwardRef(Paper)) className=\\"Home-container-1\\">
+      <ForwardRef(Paper) classes={{...}} className=\\"Home-container-1\\">
+        <div className=\\"MuiPaper-root MuiPaper-elevation1 Home-container-1 MuiPaper-rounded\\">
           <h1 className=\\"Home-heading-2\\">
             This is the spring skillup project.
           </h1>
@@ -63,8 +63,8 @@ exports[`Home component should match snapshot 1`] = `
             Use top navigation to go to Podcasts page and look how this stack works.
           </p>
         </div>
-      </Paper>
-    </WithStyles(Paper)>
+      </ForwardRef(Paper)>
+    </WithStyles(ForwardRef(Paper))>
   </Home>
 </WithStyles(Home)>"
 `;
