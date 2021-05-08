@@ -27,7 +27,7 @@
       "morgan": "~1.9.0",
       "pg": "^7.15.1",
       "tslint": "^5.20.1",
-      "typeorm": "0.2.16",
+      "typeorm": "0.2.25",
       "typescript": "^3.7.4"
    },
    "devDependencies": {
